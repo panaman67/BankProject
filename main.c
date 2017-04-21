@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "administrator.c"
-#include "customer.c"
+#include "administrator.h"
+#include "customer.h"
 
 #define ADMIN 0
 #define CUSTOMER 1
