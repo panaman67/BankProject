@@ -15,9 +15,7 @@ int main(int argc, char* argv[])
 	char ID[MAX_LENGTH_LOGIN + 1], password[MAX_LENGTH_LOGIN + 1];
 	FILE* data;
 	Account* accountCurr;
-	
 	data = fopen("CustomerData.txt", "r+");
-	
 	Account accounts[MAX_CUSTOMERS];
 	
 	
@@ -34,7 +32,10 @@ int main(int argc, char* argv[])
 	scanf("%5s", password);
 	password[MAX_LENGTH_LOGIN] = '\0';
 	
+	
+	
 	LoadCustomers(data, accounts);
+	
 	
 	for (int i = 0; i < MAX_CUSTOMERS; i++)
 	{
@@ -44,10 +45,12 @@ int main(int argc, char* argv[])
 			break;
 		}
 	}
-	//printf("%s\n\n\n", accountCurr->firstName);
 	
-	//DisplayMenu(accountCurr->status);
+	printf("%d\n\n", accountCurr -> status);
+	
+	
 	int choice;
+	/*
 	if (accountCurr->status == ADMIN)
 	{
 		while(1)
@@ -77,7 +80,8 @@ int main(int argc, char* argv[])
 			
 		}
 	}
-	
+	*/
+	/*
 	if (accountCurr->status == CUSTOMER)
 	{
 		while (1)
@@ -87,7 +91,7 @@ int main(int argc, char* argv[])
 			scanf("%d", &choice);
 			getchar();
 			
-			//printf("%d\n\n\n\n", choice);
+
 			switch (choice)
 			{
 				case 1:
@@ -97,6 +101,7 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+	*/
 	fclose(data);
 	return 0;
 }
