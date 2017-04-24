@@ -14,7 +14,12 @@ int main(int argc, char* argv[])
 {
 	char ID[MAX_LENGTH_LOGIN + 1], password[MAX_LENGTH_LOGIN + 1];
 	FILE* data;
+<<<<<<< HEAD
 	Account* accountCurr;
+=======
+	Account* accountCur;
+	
+>>>>>>> parent of 9d1b138... Fixed some stuff
 	data = fopen("CustomerData.txt", "r+");
 	Account accounts[MAX_CUSTOMERS];
 	
@@ -41,10 +46,11 @@ int main(int argc, char* argv[])
 	{
 		if (strcmp(accounts[i].accountID, ID) == 0)
 		{
-			accountCurr = &accounts[i];
+			accountCur = &accounts[i];
 			break;
 		}
 	}
+<<<<<<< HEAD
 	
 	printf("%d\n\n", accountCurr -> status);
 	
@@ -52,6 +58,13 @@ int main(int argc, char* argv[])
 	int choice;
 	/*
 	if (accountCurr->status == ADMIN)
+=======
+	//printf("%s\n\n\n", accountCur->firstName);
+	
+	//DisplayMenu(accountCur->status);
+	int choice;
+	if (accountCur->status == ADMIN)
+>>>>>>> parent of 9d1b138... Fixed some stuff
 	{
 		while(1)
 		{
@@ -66,7 +79,7 @@ int main(int argc, char* argv[])
 			{
 				case 2:
 				{
-					changePassword(accountCurr);
+					changePassword(accountCur);
 				}
 				case 3:
 				{
@@ -80,6 +93,7 @@ int main(int argc, char* argv[])
 			
 		}
 	}
+<<<<<<< HEAD
 	*/
 	/*
 	if (accountCurr->status == CUSTOMER)
@@ -102,6 +116,9 @@ int main(int argc, char* argv[])
 		}
 	}
 	*/
+=======
+	
+>>>>>>> parent of 9d1b138... Fixed some stuff
 	fclose(data);
 	return 0;
 }
