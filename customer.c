@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "customer.h"
 #include "administrator.h"
 #include <string.h>
@@ -12,7 +13,7 @@ void depositMoney(Account* accountCurr)
 	double amountToDeposit;
 	
 	printf("Enter amount to deposit: ");
-	scanf("%.2f", amountToDeposit);
+	scanf("%f", amountToDeposit);
 	
 	accountCurr -> balance += amountToDeposit;
 }
@@ -23,10 +24,10 @@ void transferMoney(Account* accountCurr, Account p[])
 	char accountNum[6];
 	
 	printf("Enter account number to transfer to");
-	scanf("%s", accountNum)
+	scanf("%s", accountNum);
 	
 	printf("Enter amount to transfer to %s :", accountNum);
-	scanf("%.2f", amountToTransfer);
+	scanf("%f", amountToTransfer);
 	for(int i = 0; i < MAX_CUSTOMERS; i++)
 	{
 		if(strcmp(p[i].accountID, accountNum) == 0)
@@ -43,9 +44,7 @@ void withdrawMoney(Account* accountCurr)
 	double amountToWithdraw;
 	
 	printf("Enter amount of money to withdraw: ");
-	scanf("%.2f", amountToWithdraw);
+	scanf("%f", amountToWithdraw);
 	
 	accountCurr->balance -= amountToWithdraw;
-}
-	
 }

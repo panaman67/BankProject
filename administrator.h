@@ -1,3 +1,5 @@
+#ifndef ADMIN_H
+#define ADMIN_H
 
 #define ADMIN 0
 #define CUSTOMER 1
@@ -28,3 +30,4 @@ void deleteCustomerAccount(Account data[]);
 void showTopFive(Account data[]);
 void showAccountsAlpha(Account data[]);
 
+#endif
