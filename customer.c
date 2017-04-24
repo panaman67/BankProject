@@ -27,15 +27,16 @@ void transferMoney(Account* accountCurr, Account p[])
 	
 	printf("Enter amount to transfer to %s :", accountNum);
 	scanf("%.2f", amountToTransfer);
-	for(int i = 0; MAX_CUSTOMERS; i++)
+	for(int i = 0; i < MAX_CUSTOMERS; i++)
 	{
-		if(accountNum == accounts->accountNumber)
+		if(strcmp(p[i].accountID, accountNum) == 0)
 		{
-			accountCurr -> balance - amountToTransfer;
-			accountSec -> balance + amountToTransfer;
+			accountCurr -> balance -= amountToTransfer;
+			p[i].balance += amountToTransfer;
 		}
 	}
 }
+
 
 void withdrawMoney(Account* accountCurr)
 {
@@ -44,7 +45,7 @@ void withdrawMoney(Account* accountCurr)
 	printf("Enter amount of money to withdraw: ");
 	scanf("%.2f", amountToWithdraw);
 	
-	accountCurr->balance - amountToWithdraw;
+	accountCurr->balance -= amountToWithdraw;
 }
 	
 }
