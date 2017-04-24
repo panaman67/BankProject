@@ -1,23 +1,9 @@
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
 #include "administrator.h"
 #include "customer.h"
-
-#define ADMIN 0
-#define CUSTOMER 1
-#define MAX_LENGTH_LOGIN 5
-#define MAX_CUSTOMERS 100
-
-typedef struct
-{
-	char status;
-	char firstName[9], lastName[9];
-	char city[11];
-	char state[3];
-	char phoneNumber[9];
-	int accountNumber;
-	char password[7];
-	double balance;
-} Account;
 
 
 void DisplayMenu(int mode);
@@ -28,13 +14,16 @@ int main(int argc, char* argv[])
 {
 	char ID[MAX_LENGTH_LOGIN + 1], password[MAX_LENGTH_LOGIN + 1];
 	FILE* data;
+	Account* accountCur;
 	
 	data = fopen("CustomerData.txt", "r+");
 	
-	
 	Account accounts[MAX_CUSTOMERS];
 	
-	printf("Welcome to Online Banking/ATM System\n");
+	
+	
+	
+	printf("\nWelcome to Online Banking/ATM System\n");
 	printf("====================================\n\n");
 	
 	printf("Enter your Customer/Admin ID: ");
@@ -47,24 +36,69 @@ int main(int argc, char* argv[])
 	
 	LoadCustomers(data, accounts);
 	
+	for (int i = 0; i < MAX_CUSTOMERS; i++)
+	{
+		if (strcmp(accounts[i].accountID, ID) == 0)
+		{
+			accountCur = &accounts[i];
+			break;
+		}
+	}
+	//printf("%s\n\n\n", accountCur->firstName);
+	
+	//DisplayMenu(accountCur->status);
+	int choice;
+	if (accountCur->status == ADMIN)
+	{
+		while(1)
+		{
+			DisplayMenu(ADMIN);
+
+			printf("Enter an option: ");
+			scanf("%d", &choice);
+			getchar();
+			
+			//printf("%d\n\n\n\n", choice);
+			switch (choice)
+			{
+				case 2:
+				{
+					changePassword(accountCur);
+				}
+				case 3:
+				{
+					viewCustomerInfo(accounts);
+				}
+				case 4:
+				{
+					changeCustomerInfo(accounts);
+				}
+			}
+			
+		}
+	}
+	
 	fclose(data);
 	return 0;
 }
 
 void LoadCustomers(FILE* input, Account p[])
 {
-	
-	fscanf(input, "%c %s %s %s %s %d %s %f", &p[0].status,
-											  p[0].firstName,
-											  p[0].lastName,
-											  p[0].city,
-											  p[0].state,
-											  p[0].phoneNumber,
-											 &p[0].accountNumber,
-											  p[0].password,
-											 &p[0].balance);
-	//printf("%c\n\n\n", p[0].status);
-	
+	int i = 0;
+	while (i < MAX_CUSTOMERS)
+	{
+		fscanf(input, "%d %s %s %s %s %s %s %s %f", &p[i].status,
+												     p[i].firstName,
+												     p[i].lastName,
+												     p[i].city,
+												     p[i].state,
+												     p[i].phoneNumber,
+												     p[i].accountID,
+												     p[i].password,
+												    &p[i].balance);
+		i++;
+	}
+	//printf("%s\n\n\n", p[0].balance);
 }
 
 
@@ -72,7 +106,7 @@ void DisplayMenu(int mode)
 {
 	if (mode == ADMIN)
 	{
-		printf("--------------------\n");
+		printf("\n--------------------\n");
 		printf("Administrator Menu\n");
 		printf("--------------------\n");
 		printf("1)  Create Customer account\n");
