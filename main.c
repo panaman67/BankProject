@@ -3,30 +3,34 @@
 #include <ctype.h>
 
 #include "administrator.h"
-#include "customer.h"
+//#include "customer.h"
 
-
+//function prototypes
 void DisplayMenu(int mode);
-void LoadCustomers(FILE* input, Account p[]);
+void DownloadCustomers(FILE* input, Account p[]);
+void UploadCustomers(FILE* input, Account p[]);
 
 
 int main(int argc, char* argv[])
 {
+	//strings for ID and password
 	char ID[MAX_LENGTH_LOGIN + 1], password[MAX_LENGTH_LOGIN + 1];
+	//file pointer to input data
 	FILE* data;
-
-	Account* accountCurr;
-
 	
+	//Account pointer for logged in account
+	Account* accountCurr;
+	
+	//store data from file in data
 	data = fopen("CustomerData.txt", "r+");
+	//account array
 	Account accounts[MAX_CUSTOMERS];
 	
-	
-	
-	
+	//print welcome screen
 	printf("\nWelcome to Online Banking/ATM System\n");
 	printf("====================================\n\n");
 	
+	//prompt user for ID and password
 	printf("Enter your Customer/Admin ID: ");
 	scanf("%5s", ID);
 	ID[MAX_LENGTH_LOGIN] = '\0';
@@ -36,10 +40,10 @@ int main(int argc, char* argv[])
 	password[MAX_LENGTH_LOGIN] = '\0';
 	
 	
+	//call DownloadCustomers
+	DownloadCustomers(data, accounts);
 	
-	LoadCustomers(data, accounts);
-	
-	
+	//search for account matching ID and password
 	for (int i = 0; i < MAX_CUSTOMERS; i++)
 	{
 		if (strcmp(accounts[i].accountID, ID) == 0)
@@ -48,51 +52,60 @@ int main(int argc, char* argv[])
 			break;
 		}
 	}
-
 	
-	printf("%d\n\n", accountCurr -> status);
+	//printf("%d\n\n", accountCurr -> status);
 	
-	
+	//int variable for choice
 	int choice;
-	/*
+	//if admin
 	if (accountCurr->status == ADMIN)
-
-	//printf("%s\n\n\n", accountCur->firstName);
-	
-	//DisplayMenu(accountCur->status);
-	int choice;
-	if (accountCur->status == ADMIN)
 	{
 		while(1)
 		{
+			//display menu
 			DisplayMenu(ADMIN);
 
 			printf("Enter an option: ");
 			scanf("%d", &choice);
 			getchar();
 			
-			//printf("%d\n\n\n\n", choice);
+			//do action based on choice
 			switch (choice)
 			{
 				case 2:
 				{
-					changePassword(accountCur);
+					changePassword(accountCurr);
+					break;
 				}
 				case 3:
 				{
 					viewCustomerInfo(accounts);
+					break;
 				}
 				case 4:
 				{
 					changeCustomerInfo(accounts);
+					break;
+				}
+				/*
+				case 6:
+				{
+					showTopFive(accounts);
+					break;
+				}
+				*/
+				case 7:
+				{
+					showAccountsAlpha(accounts);
+					break;
 				}
 			}
 			
 		}
 	}
 
-	*/
-	/*
+	
+	/*  IMPLEMENTED AFTER ADMIN!!!
 	if (accountCurr->status == CUSTOMER)
 	{
 		while (1)
@@ -114,12 +127,13 @@ int main(int argc, char* argv[])
 	}
 	*/
 
-	
+	//close data file
 	fclose(data);
 	return 0;
 }
 
-void LoadCustomers(FILE* input, Account p[])
+//function to load accounts from text file
+void DownloadCustomers(FILE* input, Account p[])
 {
 	int i = 0;
 	while (i < MAX_CUSTOMERS)
@@ -138,7 +152,13 @@ void LoadCustomers(FILE* input, Account p[])
 	//printf("%s\n\n\n", p[0].balance);
 }
 
+//function to put accounts bact to text file
+void UploadCustomers(FILE* input, Account p[])
+{
+	
+}
 
+//function to display correct menu based on who is logged in
 void DisplayMenu(int mode)
 {
 	if (mode == ADMIN)
@@ -160,12 +180,12 @@ void DisplayMenu(int mode)
 		printf("--------------------\n");
 		printf("Customer Menu\n");
 		printf("--------------------\n");
-		printf("a)  Change Password\n");
-		printf("b)  View Customer information\n");
-		printf("c)  View Balance\n");
-		printf("d)  Make a Deposit\n");
-		printf("e)  Transfer Money\n");
-		printf("f)  Withdraw Money\n");
-		printf("g)  Exit\n");
+		printf("1)  Change Password\n");
+		printf("2)  View Customer information\n");
+		printf("3)  View Balance\n");
+		printf("4)  Make a Deposit\n");
+		printf("5)  Transfer Money\n");
+		printf("6)  Withdraw Money\n");
+		printf("7)  Exit\n");
 	}
 }

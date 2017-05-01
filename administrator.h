@@ -1,12 +1,14 @@
+//header file protection
 #ifndef ADMIN_H
 #define ADMIN_H
 
+//define constants
 #define ADMIN 0
 #define CUSTOMER 1
 #define MAX_LENGTH_LOGIN 5
 #define MAX_CUSTOMERS 100
 
-
+//define structure for account
 typedef struct
 {
 	int status;
@@ -19,15 +21,14 @@ typedef struct
 	double balance;
 } Account;
 
-
+//function prototypes
 Account* createCustomerAccount();
-
-void changeCustomerInfo(Account p[]);
-
 void changePassword(Account* p);
 void viewCustomerInfo(Account p[]);
+void changeCustomerInfo(Account p[]);
 void deleteCustomerAccount(Account data[]);
 void showTopFive(Account data[]);
 void showAccountsAlpha(Account data[]);
 
+//end header protection 
 #endif

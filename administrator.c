@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+//include header file
 #include "administrator.h"
 
-
+//function for creating account
 Account* createCustomerAccount()
 {
 	
 }
 
+//change password function for currently logged in account
 void changePassword(Account* p)
 {
 	char newPassword[7];
@@ -18,6 +21,7 @@ void changePassword(Account* p)
 	printf("%s\n", p->password);
 }
 
+//function for viewing selected account
 void viewCustomerInfo(Account p[])
 {
 	char ID[6];
@@ -42,10 +46,44 @@ void viewCustomerInfo(Account p[])
 	}
 }
 
-
+//function to select account and modify details other than password
+//and balance and ID
 void changeCustomerInfo(Account p[])
 {
 	
+}
+
+//function to recieve account ID and delete it from account list
+void deleteCustomerAccount(Account data[])
+{
+	
+}
+
+//function to show top 5 accounts based on balance to admin
+void showTopFive(Account data[])
+{
+	
+}
+
+//function to show all accounts with last name starting with inputted character
+void showAccountsAlpha(Account p[])
+{
+	char letter;
+	printf("Show accounts of last name starting with: ");
+	letter = getchar();
+	letter = toupper(letter);
+	printf("Acc#   FN       LN       Balance\n");
+	for (int i = 0; i < MAX_CUSTOMERS; i++)
+	{
+		if (p[i].lastName[0] == letter)
+		{
+			printf("%-6s %-8s %-8s %-.2f\n", p[i].accountID, 
+											p[i].firstName, 
+											p[i].lastName, 
+											p[i].balance);
+			break;
+		}
+	}
 }
 
 

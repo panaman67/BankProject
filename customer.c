@@ -1,13 +1,16 @@
 #include <stdio.h>
+#include <string.h>
+//include header files
 #include "customer.h"
 #include "administrator.h"
-#include <string.h>
 
+//function for viewing balence
 void ViewBalance(Account* accountCurr)
 {
 	printf("Your balance is: %.2f\n", accountCurr -> balance);
 }
 
+//function for depositimg money
 void depositMoney(Account* accountCurr)
 {
 	double amountToDeposit;
@@ -20,6 +23,7 @@ void depositMoney(Account* accountCurr)
 	accountCurr -> balance += amountToDeposit;
 }
 
+//function to transfer money
 void transferMoney(Account* accountCurr, Account p[])
 {
 	double amountToTransfer;
@@ -42,7 +46,7 @@ void transferMoney(Account* accountCurr, Account p[])
 	}
 }
 
-
+//function to withdraw money
 void withdrawMoney(Account* accountCurr)
 {
 	double amountToWithdraw;
