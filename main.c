@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -17,9 +18,12 @@ int main(int argc, char* argv[])
 	char ID[MAX_LENGTH_LOGIN + 1], password[MAX_LENGTH_LOGIN + 1];
 	//file pointer to input data
 	FILE* data;
+	int freePosition = 10;
 	
 	//Account pointer for logged in account
 	Account* accountCurr;
+	
+
 	
 	//store data from file in data
 	data = fopen("CustomerData.txt", "r+");
@@ -43,10 +47,12 @@ int main(int argc, char* argv[])
 	//call DownloadCustomers
 	DownloadCustomers(data, accounts);
 	
+	
+	
 	//search for account matching ID and password
 	for (int i = 0; i < MAX_CUSTOMERS; i++)
 	{
-		if (strcmp(accounts[i].accountID, ID) == 0)
+		if (strcmp(accounts[i].accountID, ID) == 0 && strcmp(accounts[i].password, password) == 0)
 		{
 			accountCurr = &accounts[i];
 			break;
@@ -72,6 +78,12 @@ int main(int argc, char* argv[])
 			//do action based on choice
 			switch (choice)
 			{
+				case 1:
+				{
+					createCustomerAccount(accounts, freePosition);
+					freePosition++;
+					break;
+				}
 				case 2:
 				{
 					changePassword(accountCurr);
@@ -87,13 +99,16 @@ int main(int argc, char* argv[])
 					changeCustomerInfo(accounts);
 					break;
 				}
-				/*
+				case 5:
+				{
+					deleteCustomerAccount(accounts);
+					break;
+				}
 				case 6:
 				{
 					showTopFive(accounts);
 					break;
 				}
-				*/
 				case 7:
 				{
 					showAccountsAlpha(accounts);
@@ -151,7 +166,39 @@ void DownloadCustomers(FILE* input, Account p[])
 	}
 	//printf("%s\n\n\n", p[0].balance);
 }
-
+/*
+void LLDownload(FILE* input, Node* head)
+{
+	Node* current = head;
+	
+	int i = 1;
+	fscanf(input, "%d %s %s %s %s %s %s %s %f",  current->status,
+												 current->firstName,
+												 current->lastName,
+												 current->city,
+												 current->state,
+												 current->phoneNumber,
+												 current->accountID,
+												 current->password,
+												 current->balance);
+	current->next = malloc(sizeof(Node));
+	
+												 
+	while (i < MAX_CUSTOMERS)
+	{
+		fscanf(input, "%d %s %s %s %s %s %s %s %f", &p[i].status,
+												     p[i].firstName,
+												     p[i].lastName,
+												     p[i].city,
+												     p[i].state,
+												     p[i].phoneNumber,
+												     p[i].accountID,
+												     p[i].password,
+												    &p[i].balance);
+		i++;
+	}
+}
+*/
 //function to put accounts bact to text file
 void UploadCustomers(FILE* input, Account p[])
 {

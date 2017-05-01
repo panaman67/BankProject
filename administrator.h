@@ -18,14 +18,15 @@ typedef struct
 	char phoneNumber[9];
 	char accountID[6];   //MAX 5 digits
 	char password[7];
-	double balance;
+	float balance;
 } Account;
 
+
 //function prototypes
-Account* createCustomerAccount();
+void createCustomerAccount(Account data[], int pos);
 void changePassword(Account* p);
-void viewCustomerInfo(Account p[]);
-void changeCustomerInfo(Account p[]);
+void viewCustomerInfo(Account data[]);
+void changeCustomerInfo(Account data[]);
 void deleteCustomerAccount(Account data[]);
 void showTopFive(Account data[]);
 void showAccountsAlpha(Account data[]);
