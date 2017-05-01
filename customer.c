@@ -15,10 +15,13 @@ void depositMoney(Account* accountCurr)
 {
 	double amountToDeposit;
 	
-	printf("Enter amount to deposit: ");
-
+	inputDeposit:
+	printf("Enter amount to deposit(maximum of $5000): ");
 	scanf("%f", amountToDeposit);
-
+	if((amountToDeposit <= 0) || (amountToDeposit > 5000))
+	{
+		printf("Invalid deposit amount");
+		goto inputDeposit;
 	
 	accountCurr -> balance += amountToDeposit;
 }
@@ -27,14 +30,28 @@ void depositMoney(Account* accountCurr)
 void transferMoney(Account* accountCurr, Account p[])
 {
 	double amountToTransfer;
-	char accountNum[6];
+	char accountID[6];
 	
+	inputID:
 	printf("Enter account number to transfer to");
-	scanf("%s", accountNum);
-	
-	printf("Enter amount to transfer to %s :", accountNum);
+	scanf("%s", accountID);
+	for(int n = 0; n <= strlen(accountID); n++)
+	{
+		if((strlen(accountID) > 5) || (isdigit(accountID[n]) == False))
+		{
+			printf("Invalid account ID\n");
+			goto inputID;
+		}
 
+	inputTransfer:
+	printf("Enter amount to transfer to %s :", accountNum);
 	scanf("%f", amountToTransfer);
+	
+	if(amountToTransfer <= 0)
+	{
+		printf("Invalid amount:\n");
+		goto inputTransfer;
+	}
 
 	for(int i = 0; i < MAX_CUSTOMERS; i++)
 	{
@@ -50,11 +67,15 @@ void transferMoney(Account* accountCurr, Account p[])
 void withdrawMoney(Account* accountCurr)
 {
 	double amountToWithdraw;
-	
+	inputWithdraw:
 	printf("Enter amount of money to withdraw: ");
-
-
 	scanf("%f", amountToWithdraw);
+	if(amountToWithdraw <= 0)
+	{
+		printf("Invalid amount:\n");
+		goto inputWithdraw;
+	}
+	
 	
 	accountCurr->balance -= amountToWithdraw;
 }

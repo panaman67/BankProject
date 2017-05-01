@@ -4,6 +4,7 @@
 
 //include admin header for Account struct use
 #include "administrator.h"
+#include <bool.h>
 
 //function prototypes
 void ViewBalance(Account* accountCurr);
