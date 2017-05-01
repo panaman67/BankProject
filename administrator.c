@@ -37,7 +37,7 @@ void createCustomerAccount(Account data[], int pos)
 	printf("Enter Password: ");
 	scanf("%s", data[pos].password);
 	printf("Enter starting balance: ");
-	scanf("%f", &data[pos].balance);
+	scanf("%lf", &data[pos].balance);
 }
 
 //change password function for currently logged in account

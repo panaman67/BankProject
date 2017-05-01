@@ -18,7 +18,7 @@ typedef struct
 	char phoneNumber[9];
 	char accountID[6];   //MAX 5 digits
 	char password[7];
-	float balance;
+	double balance;
 } Account;
 
 

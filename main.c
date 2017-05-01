@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 #include "administrator.h"
-//#include "customer.h"
+#include "customer.h"
 
 //function prototypes
 void DisplayMenu(int mode);
@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
 	}
 
 	
-	/*  IMPLEMENTED AFTER ADMIN!!!
+	//  CUSTOMER
 	if (accountCurr->status == CUSTOMER)
 	{
 		while (1)
@@ -135,12 +135,37 @@ int main(int argc, char* argv[])
 			{
 				case 1:
 				{
+					changePassword(accountCurr);
+					break;
+				}
+				case 2:
+				{
+					viewAccountInfo(accountCurr);
+					break;
+				}
+				case 3:
+				{
 					ViewBalance(accountCurr);
+					break;
+				}
+				case 4:
+				{
+					depositMoney(accountCurr);
+					break;
+				}
+				case 5:
+				{
+					transferMoney(accountCurr, accounts);
+					break;
+				}
+				case 6:
+				{
+					withdrawMoney(accountCurr);
 				}
 			}
 		}
 	}
-	*/
+	
 
 	//close data file
 	fclose(data);
@@ -153,7 +178,7 @@ void DownloadCustomers(FILE* input, Account p[])
 	int i = 0;
 	while (i < MAX_CUSTOMERS)
 	{
-		fscanf(input, "%d %s %s %s %s %s %s %s %f", &p[i].status,
+		fscanf(input, "%d %s %s %s %s %s %s %s %lf", &p[i].status,
 												     p[i].firstName,
 												     p[i].lastName,
 												     p[i].city,
@@ -166,39 +191,7 @@ void DownloadCustomers(FILE* input, Account p[])
 	}
 	//printf("%s\n\n\n", p[0].balance);
 }
-/*
-void LLDownload(FILE* input, Node* head)
-{
-	Node* current = head;
-	
-	int i = 1;
-	fscanf(input, "%d %s %s %s %s %s %s %s %f",  current->status,
-												 current->firstName,
-												 current->lastName,
-												 current->city,
-												 current->state,
-												 current->phoneNumber,
-												 current->accountID,
-												 current->password,
-												 current->balance);
-	current->next = malloc(sizeof(Node));
-	
-												 
-	while (i < MAX_CUSTOMERS)
-	{
-		fscanf(input, "%d %s %s %s %s %s %s %s %f", &p[i].status,
-												     p[i].firstName,
-												     p[i].lastName,
-												     p[i].city,
-												     p[i].state,
-												     p[i].phoneNumber,
-												     p[i].accountID,
-												     p[i].password,
-												    &p[i].balance);
-		i++;
-	}
-}
-*/
+
 //function to put accounts bact to text file
 void UploadCustomers(FILE* input, Account p[])
 {
