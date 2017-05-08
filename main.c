@@ -1,3 +1,9 @@
+/*
+Names:   Nicholas Paladino
+	     James Sigler
+Section: 502
+Purpose: To simulate a banking system
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,8 +14,8 @@
 
 //function prototypes
 void DisplayMenu(int mode);
-void DownloadCustomers(FILE* input, Account p[]);
-void UploadCustomers(FILE* input, Account p[]);
+void DownloadCustomers(FILE* input, Account p[], int numAccounts);
+void UploadCustomers(FILE* output, Account p[], int numAccounts);
 
 
 int main(int argc, char* argv[])
@@ -18,45 +24,66 @@ int main(int argc, char* argv[])
 	char ID[MAX_LENGTH_LOGIN + 1], password[MAX_LENGTH_LOGIN + 1];
 	//file pointer to input data
 	FILE* data;
-	int freePosition = 10;
-	
+	int freePosition = 11;
+	char* fileName = argv[1];
+	//integer for account number for new accounts
+	int numberForNewAccount = 13598;
 	//Account pointer for logged in account
 	Account* accountCurr;
-	
-
-	
-	//store data from file in data
-	data = fopen("CustomerData.txt", "r+");
-	//account array
+	//Account array
 	Account accounts[MAX_CUSTOMERS];
 	
 	//print welcome screen
 	printf("\nWelcome to Online Banking/ATM System\n");
 	printf("====================================\n\n");
 	
+	char temp[100];
+	
+	LOGIN_ID:
 	//prompt user for ID and password
 	printf("Enter your Customer/Admin ID: ");
-	scanf("%5s", ID);
-	ID[MAX_LENGTH_LOGIN] = '\0';
+	scanf("%s", temp);
+	//ID[MAX_LENGTH_LOGIN] = '\0';
 	
+	if (strlen(temp) != 5)
+	{
+		printf("ID length incorrect, must be 5 characters.\n");
+		goto LOGIN_ID;
+	}
+	strcpy(ID, temp);
+	//temp[0] = '\0';
+	
+	LOGIN_PASS:
 	printf("Enter your Customer/Admin Password: ");
-	scanf("%5s", password);
-	password[MAX_LENGTH_LOGIN] = '\0';
+	scanf("%s", temp);
+	//password[MAX_LENGTH_LOGIN] = '\0';
+	
+	if (strlen(temp) != 6 && strcmp(temp, "admin") != 0)
+	{
+		printf("Password length incorrect, must be 6 characters.\n");
+		goto LOGIN_PASS;
+	}
+	strcpy(password, temp);
 	
 	
-	//call DownloadCustomers
-	DownloadCustomers(data, accounts);
-	
-	
+	data = fopen(fileName, "r");
+	DownloadCustomers(data, accounts, freePosition);
+	fclose(data);
 	
 	//search for account matching ID and password
-	for (int i = 0; i < MAX_CUSTOMERS; i++)
+	int i;
+	for (i = 0; i < freePosition; i++)
 	{
 		if (strcmp(accounts[i].accountID, ID) == 0 && strcmp(accounts[i].password, password) == 0)
 		{
 			accountCurr = &accounts[i];
 			break;
 		}
+	}
+	if (i >= freePosition)
+	{
+		printf("No account found with this login info!\n");
+		goto LOGIN_ID;
 	}
 	
 	//printf("%d\n\n", accountCurr -> status);
@@ -68,54 +95,60 @@ int main(int argc, char* argv[])
 	{
 		while(1)
 		{
+			
 			//display menu
 			DisplayMenu(ADMIN);
 
 			printf("Enter an option: ");
 			scanf("%d", &choice);
-			getchar();
+			while(getchar() != '\n');
 			
+			data = fopen(fileName, "r");
+			DownloadCustomers(data, accounts, freePosition);
+			fclose(data);
 			//do action based on choice
 			switch (choice)
 			{
 				case 1:
 				{
-					createCustomerAccount(accounts, freePosition);
+					CreateCustomerAccount(accounts, freePosition, &numberForNewAccount);
 					freePosition++;
 					break;
 				}
 				case 2:
 				{
-					changePassword(accountCurr);
+					ChangePassword(accountCurr);
 					break;
 				}
 				case 3:
 				{
-					viewCustomerInfo(accounts);
+					ViewCustomerInfo(accounts);
 					break;
 				}
 				case 4:
 				{
-					changeCustomerInfo(accounts);
+					ChangeCustomerInfo(accounts);
 					break;
 				}
 				case 5:
 				{
-					deleteCustomerAccount(accounts);
+					DeleteCustomerAccount(accounts);
 					break;
 				}
 				case 6:
 				{
-					showTopFive(accounts);
+					ShowTopFive(accounts);
 					break;
 				}
 				case 7:
 				{
-					showAccountsAlpha(accounts);
+					ShowAccountsAlpha(accounts);
 					break;
 				}
 			}
-			
+			data = fopen(fileName, "w");
+			UploadCustomers(data, accounts, freePosition);
+			fclose(data);
 		}
 	}
 
@@ -135,7 +168,7 @@ int main(int argc, char* argv[])
 			{
 				case 1:
 				{
-					changePassword(accountCurr);
+					ChangePassword(accountCurr);
 					break;
 				}
 				case 2:
@@ -161,6 +194,11 @@ int main(int argc, char* argv[])
 				case 6:
 				{
 					withdrawMoney(accountCurr);
+					break;
+				}
+				case 7:
+				{
+					
 				}
 			}
 		}
@@ -168,34 +206,48 @@ int main(int argc, char* argv[])
 	
 
 	//close data file
-	fclose(data);
 	return 0;
 }
 
 //function to load accounts from text file
-void DownloadCustomers(FILE* input, Account p[])
+void DownloadCustomers(FILE* input, Account p[], int numAccounts)
 {
 	int i = 0;
-	while (i < MAX_CUSTOMERS)
+	while (i < numAccounts)
 	{
 		fscanf(input, "%d %s %s %s %s %s %s %s %lf", &p[i].status,
-												     p[i].firstName,
-												     p[i].lastName,
-												     p[i].city,
-												     p[i].state,
-												     p[i].phoneNumber,
-												     p[i].accountID,
-												     p[i].password,
-												    &p[i].balance);
+												      p[i].firstName,
+												      p[i].lastName,
+												      p[i].city,
+												      p[i].state,
+												      p[i].phoneNumber,
+												      p[i].accountID,
+												      p[i].password,
+												     &p[i].balance);
 		i++;
 	}
 	//printf("%s\n\n\n", p[0].balance);
+	fclose(input);
 }
 
 //function to put accounts bact to text file
-void UploadCustomers(FILE* input, Account p[])
+void UploadCustomers(FILE* output, Account p[], int numAccounts)
 {
-	
+	int i = 0;
+	while (i < numAccounts)
+	{
+		
+		fprintf(output, "%d %s %s %s %s %s %s %s %.2lf\r\n", p[i].status,
+														     p[i].firstName,
+														     p[i].lastName,
+														     p[i].city,
+														     p[i].state,
+														     p[i].phoneNumber,
+														     p[i].accountID,
+														     p[i].password,
+														     p[i].balance);
+		i++;
+	}
 }
 
 //function to display correct menu based on who is logged in

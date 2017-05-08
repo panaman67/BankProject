@@ -1,3 +1,11 @@
+/*
+Names:   Nicholas Paladino
+	     James Sigler
+Section: 502
+Purpose: To declare function prototypes for admin
+		 and to define Account struct
+*/
+
 //header file protection
 #ifndef ADMIN_H
 #define ADMIN_H
@@ -21,15 +29,14 @@ typedef struct
 	double balance;
 } Account;
 
-
 //function prototypes
-void createCustomerAccount(Account data[], int pos);
-void changePassword(Account* p);
-void viewCustomerInfo(Account data[]);
-void changeCustomerInfo(Account data[]);
-void deleteCustomerAccount(Account data[]);
-void showTopFive(Account data[]);
-void showAccountsAlpha(Account data[]);
+void CreateCustomerAccount(Account data[], int pos, int* accNum);
+void ChangePassword(Account* p);
+void ViewCustomerInfo(Account data[]);
+void ChangeCustomerInfo(Account data[]);
+void DeleteCustomerAccount(Account data[]);
+void ShowTopFive(Account data[]);
+void ShowAccountsAlpha(Account data[]);
 
 //end header protection 
 #endif
