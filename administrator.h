@@ -11,8 +11,8 @@ Purpose: To declare function prototypes for admin
 #define ADMIN_H
 
 //define constants
-#define ADMIN 0
-#define CUSTOMER 1
+#define ADMIN 1
+#define CUSTOMER 2
 #define MAX_LENGTH_LOGIN 5
 #define MAX_CUSTOMERS 100
 
@@ -34,7 +34,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum);
 void ChangePassword(Account* p);
 void ViewCustomerInfo(Account data[]);
 void ChangeCustomerInfo(Account data[]);
-void DeleteCustomerAccount(Account data[]);
+void DeleteCustomerAccount(Account data[], int numAccounts);
 void ShowTopFive(Account data[]);
 void ShowAccountsAlpha(Account data[]);
 

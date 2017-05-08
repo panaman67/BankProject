@@ -44,20 +44,7 @@ int StructCmp(const void *a, const void *b)
 void CreateCustomerAccount(Account data[], int pos, int* accNum)
 {
 	char temp[50];
-	data[pos].status = 1;
-	/*
-	printf("Enter first name: ");
-	scanf("%s", data[pos].firstName);
-	printf("Enter last name: ");
-	scanf("%s", data[pos].lastName);
-	printf("Enter city: ");
-	scanf("%s", data[pos].city);
-	printf("Enter state: ");
-	scanf("%s", data[pos].state);
-	printf("Enter phone number (XXX-XXXX): ");
-	scanf("%s", data[pos].phoneNumber);
-	*/
-	
+	data[pos].status = CUSTOMER;
 	
 	FN:
 	printf("Enter first name: ");
@@ -119,21 +106,26 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	}
 	strcpy(data[pos].password, temp);
 	
-	/*
-	BALENCE:
+	
+	BALANCE:
 	printf("Enter starting balance: ");
 	scanf("%s", temp);
-	if (strlen(temp) != 8)
+	for (int k = 0; k < strlen(temp); k++)
 	{
-		printf("Phone number MUST be in format XXX-XXXX.\n");
-		goto BALANCE;
+		if (isalpha(temp[k]))
+		{
+			printf("Balence MUST be a number!\n");
+			goto BALANCE;
+		}
+		else if (isspace(temp[k]))
+		{
+			printf("Cant include whitespace!\n");
+			goto BALANCE;
+		}
 	}
-	*/
-	printf("Enter starting balance: ");
-	scanf("%lf", &data[pos].balance);
+	data[pos].balance = atoi(temp);
 	
-	*accNum += 4;
-	sprintf(data[pos].accountID, "%d", *accNum);
+	sprintf(data[pos].accountID, "%d", *accNum += 4);
 	
 	viewAccountInfo(&data[pos]);
 }
@@ -159,7 +151,7 @@ void ViewCustomerInfo(Account data[])
 	{
 		if (strcmp(data[i].accountID, ID) == 0)
 		{
-			printf("\nStatus: %s\n", data[i].status == 1 ? "ADMIN" : "CUSTOMER");
+			printf("\n\nStatus: %s\n", data[i].status == 1 ? "ADMIN" : "CUSTOMER");
 			printf("First Name: %s\n", data[i].firstName);
 			printf("Last Name: %s\n", data[i].lastName);
 			printf("City: %s\n", data[i].city);
@@ -230,15 +222,16 @@ void ChangeCustomerInfo(Account data[])
 	}
 }
 
+
 //function to recieve account ID and delete it from account list
-void DeleteCustomerAccount(Account data[])
+void DeleteCustomerAccount(Account data[], int numAccounts)
 {
 	
 	char ID[6];
 	printf("Enter account ID to delete: ");
 	scanf("%5s", ID);
 	
-	for (int i = 0; i < MAX_CUSTOMERS; i++)
+	for (int i = 0; i < numAccounts; i++)
 	{
 		if (strcmp(data[i].accountID, ID) == 0)
 		{
