@@ -90,7 +90,7 @@ void transferMoney(Account* accountCurr, Account p[])
 	printf("Enter amount to transfer to %s :", accountID);
 	scanf("%lf", &amountToTransfer);
 	
-	if(amountToTransfer <= 0)
+	if(amountToTransfer <= 0 || amountToTransfer > MAX_TRANSACTION)
 	{
 		printf("Invalid amount:\n");
 		goto inputTransfer;
@@ -158,7 +158,7 @@ void withdrawMoney(Account* accountCurr)
 
 void viewAccountInfo(Account* p)
 {
-	printf("First Name: %s\n", p->firstName);
+	printf("\nFirst Name: %s\n", p->firstName);
 	printf("Last Name: %s\n", p->lastName);
 	printf("City: %s\n", p->city);
 	printf("State: %s\n", p->state);
