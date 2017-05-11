@@ -32,8 +32,8 @@ typedef struct
 //function prototypes
 void CreateCustomerAccount(Account data[], int pos, int* accNum);
 void ChangePassword(Account* p);
-void ViewCustomerInfo(Account data[]);
-void ChangeCustomerInfo(Account data[]);
+void ViewCustomerInfo(Account data[], int numAccounts);
+void ChangeCustomerInfo(Account data[], int numAccounts);
 void DeleteCustomerAccount(Account data[], int numAccounts);
 void ShowTopFive(Account data[]);
 void ShowAccountsAlpha(Account data[]);

@@ -33,14 +33,15 @@ int StructCmp(const void *a, const void *b)
 }
 
 
-/*************************************************************
+/********************************************************************************
  Name: CreateCustomerAccount
  Purpose: create new account
  Parameters: Account data[] (array of accounts)
 			 int pos (position in array to be added)
+			 int* accNum (pointer to account number to be used for new account)
  Return value: none
- Side Effects: alters data array
-*************************************************************/
+ Side Effects: alters data array by addeding an element to the end
+********************************************************************************/
 void CreateCustomerAccount(Account data[], int pos, int* accNum)
 {
 	char temp[50];
@@ -48,7 +49,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	FN:
 	printf("Enter first name: ");
-	scanf("%s", temp);
+	gets(temp);
 	if (strlen(temp) > 8)
 	{
 		printf("First name too long, max of 8 characters.\n");
@@ -58,7 +59,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	LN:
 	printf("Enter last name: ");
-	scanf("%s", temp);
+	gets(temp);
 	if (strlen(temp) > 8)
 	{
 		printf("Last name too long, max of 8 characters.\n");
@@ -68,7 +69,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	CITY:
 	printf("Enter city: ");
-	scanf("%s", temp);
+	gets(temp);
 	if (strlen(temp) > 10)
 	{
 		printf("City name too long, max of 10 characters.\n");
@@ -78,7 +79,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	STATE:
 	printf("Enter state (2 character abbrev.): ");
-	scanf("%s", temp);
+	gets(temp);
 	if (strlen(temp) != 2)
 	{
 		printf("State invalid, MUST be 2 characters.\n");
@@ -88,7 +89,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	PHONE:
 	printf("Enter phone number (XXX-XXXX): ");
-	scanf("%s", temp);
+	gets(temp);
 	if (strlen(temp) != 8)
 	{
 		printf("Phone number MUST be in format XXX-XXXX.\n");
@@ -98,7 +99,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	PASS:
 	printf("Enter password (6 character max): ");
-	scanf("%s", temp);
+	gets(temp);
 	if (strlen(temp) > 6)
 	{
 		printf("Phone number MUST be in format XXX-XXXX.\n");
@@ -109,7 +110,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	BALANCE:
 	printf("Enter starting balance: ");
-	scanf("%s", temp);
+	gets(temp);
 	for (int k = 0; k < strlen(temp); k++)
 	{
 		if (isalpha(temp[k]))
@@ -123,31 +124,77 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 			goto BALANCE;
 		}
 	}
-	data[pos].balance = atoi(temp);
+	data[pos].balance = atof(temp);
+	
 	
 	sprintf(data[pos].accountID, "%d", *accNum += 4);
 	
 	viewAccountInfo(&data[pos]);
 }
 
-//change password function for currently logged in account
+/*************************************************************
+ Name: ChangePassword
+ Purpose: Change password of currently loged in account (used for admin AND customer)
+ Parameters: Account* p (Logged in account)
+ Return value: none
+ Side Effects: change password field of p
+*************************************************************/
 void ChangePassword(Account* p)
 {
-	char newPassword[7];
+	char temp[50];
+	TOP:
 	printf("Enter new password: ");
-	scanf("%s", newPassword);
-	strcpy(p->password, newPassword);
-	printf("Password changed!\n\n");
-	printf("%s\n", p->password);
+	gets(temp);
+	if (strlen(temp) > 6)
+	{
+		printf("Incorrect password length, max 6 characters!\n");
+		goto TOP;
+	}
+	for (int i = 0; i < strlen(temp); i++)
+	{
+		if (isspace(temp[i]) || ispunct(temp[i]))
+		{
+			printf("Password CANNOT contain whitespace or punctuation.\n");
+			goto TOP;
+		}
+	}
+	
+	strcpy(p->password, temp);
+	printf("Password changed to: %s\n\n", p->password);
 }
 
-//function for viewing selected account
-void ViewCustomerInfo(Account data[])
+/*************************************************************
+ Name: ViewCustomerInfo
+ Purpose: Print out each field of a certian account to user
+ Parameters: Account data[] (array of accounts)
+ Return value: none
+ Side Effects: none
+*************************************************************/
+void ViewCustomerInfo(Account data[], int numAccounts)
 {
 	char ID[6];
+	char temp[20];
+	TOP:
 	printf("Enter account ID to observe: ");
-	scanf("%s", ID);
-	for (int i = 0; i < MAX_CUSTOMERS; i++)
+	gets(temp);
+	if (strlen(temp) != 5)
+	{
+		printf("Incorrect ID length, MUST be 5 numbers.\n");
+		goto TOP;
+	}
+	for (int k = 0; k < strlen(temp); k++)
+	{
+		if (!isdigit(temp[k]))
+		{
+			printf("ID MUST be a 5 digit number.\n");
+			goto TOP;
+		}
+	}
+	strcpy(ID, temp);
+	
+	
+	int i;
+	for (i = 0; i < numAccounts; i++)
 	{
 		if (strcmp(data[i].accountID, ID) == 0)
 		{
@@ -160,72 +207,214 @@ void ViewCustomerInfo(Account data[])
 			printf("Account ID: %s\n", data[i].accountID);
 			printf("Password: %s\n", data[i].password);
 			printf("Balance: %.2f\n\n", data[i].balance);
-			getchar();
 			break;
 		}
 	}
+	if (i >= numAccounts)
+	{
+		printf("Account number entered does not exist!\n");
+		goto TOP;
+	}
 }
 
-//function to select account and modify details other than password
-//and balance and ID
-void ChangeCustomerInfo(Account data[])
+/*************************************************************
+ Name: ChangeCustomerInfo
+ Purpose: Change each field of selected account
+ Parameters: Account data[] (array of accounts)
+ Return value: none
+ Side Effects: Changes fields of account chosen in data array
+*************************************************************/
+
+//INPUT VALIDATE!!!
+void ChangeCustomerInfo(Account data[], int numAccounts)
 {
+	char temp[50];
 	char ID[6];
 	int choice;
+	
+	TOP:
 	printf("Enter account ID to change: ");
-	scanf("%5s", ID);
-	for (int i = 0; i < MAX_CUSTOMERS; i++)
+	gets(temp);
+	if (strlen(temp) != 5)
+	{
+		printf("ID MUST be 5 digits!\n");
+		goto TOP;
+	}
+	for (int k = 0; k < strlen(temp); k++)
+	{
+		if (!isdigit(temp[k]))
+		{
+			printf("ID MUST be a 5 digit number.\n");
+			goto TOP;
+		}
+	}
+	strcpy(ID, temp);
+	
+	
+	int i;
+	for (i = 0; i < numAccounts; i++)
 	{
 		if (strcmp(data[i].accountID, ID) == 0)
 		{
-			printf("1) First name\n");
+			CHOICE:
+			printf("\n1) First name\n");
 			printf("2) Last name\n");
 			printf("3) City\n");
 			printf("4) State\n");
 			printf("5) Phone number\n");
 			printf("What field do you want to change?: ");
 			scanf("%d", &choice);
+			while (getchar() != '\n');
 			switch (choice)
 			{
 				case 1:
 				{
+					FIRST:
 					printf("Enter new first name: ");
-					scanf("%s", data[i].firstName);
+					gets(temp);
+					
+					if (strlen(temp) > 8)
+					{
+						printf("First name MUST be 8 characters or less\n");
+						goto FIRST;
+					}
+					for (int i = 0; i < strlen(temp); i++)
+					{
+						if (isspace(temp[i]) || isdigit(temp[i]))
+						{
+							printf("Can NOT contain whitespace or numbers\n");
+							goto FIRST;
+						}
+					}
+					strcpy(data[i].firstName, temp);
+					
 					break;
 				}
 				case 2:
 				{
+					LAST:
 					printf("Enter new last name: ");
-					scanf("%s", data[i].lastName);
+					gets(temp);
+					
+					if (strlen(temp) > 8)
+					{
+						printf("Last name MUST be 8 characters or less\n");
+						goto LAST;
+					}
+					for (int i = 0; i < strlen(temp); i++)
+					{
+						if (isspace(temp[i]) || isdigit(temp[i]))
+						{
+							printf("Can NOT contain whitespace or numbers\n");
+							goto LAST;
+						}
+					}
+					strcpy(data[i].lastName, temp);
+					
 					break;
 				}
 				case 3:
 				{
-					printf("Enter new city: ");
-					scanf("%s", data[i].city);
+					CITY:
+					printf("Enter new city name: ");
+					gets(temp);
+					
+					if (strlen(temp) > 10)
+					{
+						printf("Last name MUST be 8 characters or less\n");
+						goto CITY;
+					}
+					for (int i = 0; i < strlen(temp); i++)
+					{
+						if (isspace(temp[i]) || isdigit(temp[i]))
+						{
+							printf("Can NOT contain whitespace or numbers\n");
+							goto CITY;
+						}
+					}
+					strcpy(data[i].city, temp);
+					
 					break;
 				}
 				case 4:
 				{
-					printf("Enter new state: ");
-					scanf("%s", data[i].state);
+					STATE:
+					printf("Enter new state (2 character abbrev. ex: TX): ");
+					gets(temp);
+					
+					if (strlen(temp) != 2)
+					{
+						printf("State MUST be 2 characters\n");
+						goto STATE;
+					}
+					for (int i = 0; i < strlen(temp); i++)
+					{
+						if (isspace(temp[i]) || isdigit(temp[i]))
+						{
+							printf("Can NOT contain whitespace or numbers\n");
+							goto STATE;
+						}
+					}
+					strcpy(data[i].state, temp);
 					break;
 				}
 				case 5:
 				{
+					PN:
 					printf("Enter new phone number (XXX-XXXX): ");
-					scanf("%s", data[i].phoneNumber);
+					gets(temp);
+					
+					if (strlen(temp) != 8)
+					{
+						printf("Phone number MUST be 8 characters\n");
+						goto PN;
+					}
+					if (temp[3] != '-')
+					{
+						printf("MUST be in format XXX-XXXX\n");
+						goto PN;
+					}
+					for (int i = 0; i < strlen(temp); i++)
+					{
+						if (isspace(temp[i]) || isalpha(temp[i]))
+						{
+							printf("Can NOT contain whitespace or letters\n");
+							goto PN;
+						}
+					}
+					strcpy(data[i].phoneNumber, temp);
 					break;
+				}
+				default:
+				{
+					printf("\nNot valid choice!\n\n");
+					goto CHOICE;
 				}
 			}
 		}
 	}
+	
+	if (i >= numAccounts)
+	{
+		printf("No account found!\n");
+		goto TOP;
+	}
 }
 
 
-//function to recieve account ID and delete it from account list
+/*************************************************************
+ Name: DeleteCustomerAccount
+ Purpose: Deletes record of chosen account
+ Parameters: Account data[] (account array)
+			 int numAccounts
+ Return value: none
+ Side Effects: Changes data array
+*************************************************************/
 void DeleteCustomerAccount(Account data[], int numAccounts)
 {
+	/* FIX THIS!!!!!!
+	
+	
 	
 	char ID[6];
 	printf("Enter account ID to delete: ");
@@ -240,9 +429,16 @@ void DeleteCustomerAccount(Account data[], int numAccounts)
 			break;
 		}
 	}
+	*/
 }
 
-//function to show top 5 accounts based on balance to admin
+/*************************************************************
+ Name: ShowTopFive
+ Purpose: Prints out the top 5 accounts by balance
+ Parameters: Account data[] (account array)
+ Return value: none
+ Side Effects: none
+*************************************************************/
 void ShowTopFive(Account data[])
 {
 	qsort(data, MAX_CUSTOMERS, sizeof(Account), StructCmp);
@@ -257,7 +453,13 @@ void ShowTopFive(Account data[])
 	}
 }
 
-//function to show all accounts with last name starting with inputted character
+/*************************************************************
+ Name: ShowAccountsAlpha
+ Purpose: Show all accounts with last name starting with letter chosen by user
+ Parameters: Account data[] (account array)
+ Return value: none
+ Side Effects: none
+*************************************************************/
 void ShowAccountsAlpha(Account data[])
 {
 	char letter;

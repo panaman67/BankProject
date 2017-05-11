@@ -14,20 +14,26 @@ Purpose: To simulate a banking system
 
 //function prototypes
 void DisplayMenu(int mode);
-void DownloadCustomers(FILE* input, Account p[], int* numAccounts);
+void DownloadCustomers(FILE* input, Account p[], int* numAccounts, int* accID);
 void UploadCustomers(FILE* output, Account p[], int numAccounts);
 
-
+/*************************************************************
+ Name: main
+ Purpose: Create variables, call functons, and display output
+ Parameters: none
+ Return value: int (program success)
+ Side Effects: none
+*************************************************************/
 int main(int argc, char* argv[])
 {
 	//strings for ID and password
 	char ID[MAX_LENGTH_LOGIN + 1], password[MAX_LENGTH_LOGIN + 1];
 	//file pointer to input data
 	FILE* data;
-	int numberOfAccounts = 0;
+	int numAccounts = 0;
 	char* fileName = argv[1];
 	//integer for account number for new accounts
-	int IDnumberForNewAccount = 12390;
+	int IDnumberForNewAccount;
 	//Account pointer for logged in account
 	Account* accountCurr;
 	//Account array
@@ -64,14 +70,14 @@ int main(int argc, char* argv[])
 	
 	
 	data = fopen(fileName, "r");
-	DownloadCustomers(data, accounts, &numberOfAccounts);
+	DownloadCustomers(data, accounts, &numAccounts, &IDnumberForNewAccount);
 	fclose(data);
 	
 	
 	
 	//search for account matching ID and password
 	int i;
-	for (i = 0; i < numberOfAccounts; i++)
+	for (i = 0; i < numAccounts; i++)
 	{
 		if (strcmp(accounts[i].accountID, ID) == 0 && strcmp(accounts[i].password, password) == 0)
 		{
@@ -79,14 +85,13 @@ int main(int argc, char* argv[])
 			break;
 		}
 	}
-	if (i >= numberOfAccounts)
+	if (i >= numAccounts)
 	{
 		printf("No account found with this login info!\n");
 		goto LOGIN_ID;
 	}
 	
-	//printf("%d\n\n", accountCurr -> status);
-	
+
 	//int variable for choice
 	int choice;
 	//if admin
@@ -103,16 +108,15 @@ int main(int argc, char* argv[])
 			while(getchar() != '\n');
 			
 			data = fopen(fileName, "r");
-			DownloadCustomers(data, accounts, &numberOfAccounts);
+			DownloadCustomers(data, accounts, &numAccounts, &IDnumberForNewAccount);
 			fclose(data);
 			//do action based on choice
 			switch (choice)
 			{
 				case 1:
 				{
-					CreateCustomerAccount(accounts, numberOfAccounts, &IDnumberForNewAccount);
-					numberOfAccounts++;
-					printf("%d\n\n", numberOfAccounts);
+					CreateCustomerAccount(accounts, numAccounts, &IDnumberForNewAccount);
+					numAccounts++;
 					break;
 				}
 				case 2:
@@ -122,17 +126,17 @@ int main(int argc, char* argv[])
 				}
 				case 3:
 				{
-					ViewCustomerInfo(accounts);
+					ViewCustomerInfo(accounts, numAccounts);
 					break;
 				}
 				case 4:
 				{
-					ChangeCustomerInfo(accounts);
+					ChangeCustomerInfo(accounts, numAccounts);
 					break;
 				}
 				case 5:
 				{
-					DeleteCustomerAccount(accounts, numberOfAccounts);
+					DeleteCustomerAccount(accounts, numAccounts);
 					break;
 				}
 				case 6:
@@ -145,9 +149,14 @@ int main(int argc, char* argv[])
 					ShowAccountsAlpha(accounts);
 					break;
 				}
+				case 8:
+				{
+					printf("\n\nSession terminated. Have a nice day!\n\n");
+					exit(0);
+				}
 			}
 			data = fopen(fileName, "w");
-			UploadCustomers(data, accounts, numberOfAccounts);
+			UploadCustomers(data, accounts, numAccounts);
 			fclose(data);
 		}
 	}
@@ -159,14 +168,14 @@ int main(int argc, char* argv[])
 		while (1)
 		{
 			data = fopen(fileName, "r");
-			DownloadCustomers(data, accounts, &numberOfAccounts);
+			DownloadCustomers(data, accounts, &numAccounts, &IDnumberForNewAccount);
 			fclose(data);
 			
 			
 			DisplayMenu(CUSTOMER);
 			printf("Enter an option: ");
 			scanf("%d", &choice);
-			getchar();
+			while (getchar() != '\n');
 			
 
 			switch (choice)
@@ -203,11 +212,12 @@ int main(int argc, char* argv[])
 				}
 				case 7:
 				{
-					
+					printf("\n\nSession terminated. Have a nice day!\n\n");
+					exit(0);
 				}
 			}
 			data = fopen(fileName, "w");
-			UploadCustomers(data, accounts, numberOfAccounts);
+			UploadCustomers(data, accounts, numAccounts);
 			fclose(data);
 		}
 	}
@@ -217,8 +227,17 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-//function to load accounts from text file
-void DownloadCustomers(FILE* input, Account p[], int* numberOfAccounts)
+/*************************************************************
+ Name: DownloadCustomers
+ Purpose: read lines from file and store in array
+ Parameters: FILE* input (pointer to file where data is read)
+			 Account p[] (array holding Account type)
+			 int* numAccounts (pointer to number of accounts)
+			 int* accID (starting account number to store when new account is added)
+ Return value: none
+ Side Effects: modifies p array
+*************************************************************/
+void DownloadCustomers(FILE* input, Account p[], int* numAccounts, int* accID)
 {
 	int i = 0;
 	
@@ -244,14 +263,25 @@ void DownloadCustomers(FILE* input, Account p[], int* numberOfAccounts)
 			break;
 		}
 	}
-	*numberOfAccounts = k;
+	*numAccounts = k;
+	
+	
+	*accID = atoi(p[k - 1].accountID);
 }
 
-//function to put accounts bact to text file
-void UploadCustomers(FILE* output, Account p[], int numberOfAccounts)
+/*************************************************************
+ Name: UploadCustomers
+ Purpose: print out array to a file
+ Parameters: FILE* output (pointer to file where array printed)
+			 Account p[] (array holding Account type)
+			 int numAccounts (number of accounts to write to file)
+ Return value: none
+ Side Effects: none
+*************************************************************/
+void UploadCustomers(FILE* output, Account p[], int numAccounts)
 {
 	int i = 0;
-	while (i < numberOfAccounts)
+	while (i < numAccounts)
 	{
 		
 		fprintf(output, "%d %s %s %s %s %s %s %s %.2lf\r\n", p[i].status,
@@ -267,7 +297,13 @@ void UploadCustomers(FILE* output, Account p[], int numberOfAccounts)
 	}
 }
 
-//function to display correct menu based on who is logged in
+/*************************************************************
+ Name: DisplayMenu
+ Purpose: print out menu depending on account type
+ Parameters: int mode (either 1 for admin or 2 for customer)
+ Return value: none
+ Side Effects: none
+*************************************************************/
 void DisplayMenu(int mode)
 {
 	if (mode == ADMIN)
