@@ -154,6 +154,10 @@ int main(int argc, char* argv[])
 					printf("\n\nSession terminated. Have a nice day!\n\n");
 					exit(0);
 				}
+				default:
+				{
+					printf("Not vlaid choice!\n");
+				}
 			}
 			data = fopen(fileName, "w");
 			UploadCustomers(data, accounts, numAccounts);
@@ -214,6 +218,10 @@ int main(int argc, char* argv[])
 				{
 					printf("\n\nSession terminated. Have a nice day!\n\n");
 					exit(0);
+				}
+				default:
+				{
+					printf("Not vlaid choice!\n");
 				}
 			}
 			data = fopen(fileName, "w");

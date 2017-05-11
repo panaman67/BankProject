@@ -48,62 +48,113 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	data[pos].status = CUSTOMER;
 	
 	FN:
-	printf("Enter first name: ");
+	printf("Enter new first name: ");
 	gets(temp);
-	if (strlen(temp) > 8)
+	
+	if (strlen(temp) > 8 || strlen(temp) <= 0)
 	{
-		printf("First name too long, max of 8 characters.\n");
+		printf("First name MUST be 8 characters or less\n");
 		goto FN;
+	}
+	for (int i = 0; i < strlen(temp); i++)
+	{
+		if (isspace(temp[i]) || isdigit(temp[i]))
+		{
+			printf("Can NOT contain whitespace or numbers\n");
+			goto FN;
+		}
 	}
 	strcpy(data[pos].firstName, temp);
 	
 	LN:
-	printf("Enter last name: ");
+	printf("Enter new last name: ");
 	gets(temp);
-	if (strlen(temp) > 8)
+	
+	if (strlen(temp) > 8 || strlen(temp) <= 0)
 	{
-		printf("Last name too long, max of 8 characters.\n");
+		printf("Last name MUST be 8 characters or less\n");
 		goto LN;
+	}
+	for (int i = 0; i < strlen(temp); i++)
+	{
+		if (isspace(temp[i]) || isdigit(temp[i]))
+		{
+			printf("Can NOT contain whitespace or numbers\n");
+			goto LN;
+		}
 	}
 	strcpy(data[pos].lastName, temp);
 	
 	CITY:
-	printf("Enter city: ");
+	printf("Enter new city name: ");
 	gets(temp);
-	if (strlen(temp) > 10)
+	
+	if (strlen(temp) > 10 || strlen(temp) <= 0)
 	{
-		printf("City name too long, max of 10 characters.\n");
+		printf("Last name MUST be 8 characters or less\n");
 		goto CITY;
+	}
+	for (int i = 0; i < strlen(temp); i++)
+	{
+		if (isspace(temp[i]) || isdigit(temp[i]))
+		{
+			printf("Can NOT contain whitespace or numbers\n");
+			goto CITY;
+		}
 	}
 	strcpy(data[pos].city, temp);
 	
 	STATE:
-	printf("Enter state (2 character abbrev.): ");
+	printf("Enter new state (2 character abbrev. ex: TX): ");
 	gets(temp);
+	
 	if (strlen(temp) != 2)
 	{
-		printf("State invalid, MUST be 2 characters.\n");
+		printf("State MUST be 2 characters\n");
 		goto STATE;
+	}
+	for (int i = 0; i < strlen(temp); i++)
+	{
+		if (isspace(temp[i]) || isdigit(temp[i]))
+		{
+			printf("Can NOT contain whitespace or numbers\n");
+			goto STATE;
+		}
 	}
 	strcpy(data[pos].state, temp);
 	
 	PHONE:
-	printf("Enter phone number (XXX-XXXX): ");
+	printf("Enter new phone number (XXX-XXXX): ");
 	gets(temp);
+					
 	if (strlen(temp) != 8)
 	{
-		printf("Phone number MUST be in format XXX-XXXX.\n");
+		printf("Phone number MUST be 8 characters\n");
 		goto PHONE;
 	}
+	if (temp[3] != '-')
+	{
+		printf("MUST be in format XXX-XXXX\n");
+		goto PHONE;
+	}
+	for (int i = 0; i < strlen(temp); i++)
+	{
+		if (isspace(temp[i]) || isalpha(temp[i]))
+		{
+			printf("Can NOT contain whitespace or letters\n");
+			goto PHONE;
+		}
+	}
 	strcpy(data[pos].phoneNumber, temp);
+	
 	
 	PASS:
 	printf("Enter password (6 character max): ");
 	gets(temp);
-	if (strlen(temp) > 6)
+	if (strlen(temp) > 6 || strlen(temp) <= 0)
 	{
-		printf("Phone number MUST be in format XXX-XXXX.\n");
-		goto PHONE;
+		printf("Password MUST be between 1 and 6 characters\n");
+		goto PASS;
 	}
 	strcpy(data[pos].password, temp);
 	
@@ -111,16 +162,16 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	BALANCE:
 	printf("Enter starting balance: ");
 	gets(temp);
+	if (strlen(temp) <= 0 || strlen(temp) > 10)
+	{
+		printf("Must enter a number within bounds\n");
+		goto BALANCE;
+	}
 	for (int k = 0; k < strlen(temp); k++)
 	{
-		if (isalpha(temp[k]))
+		if (isalpha(temp[k]) || isspace(temp[k]))
 		{
-			printf("Balence MUST be a number!\n");
-			goto BALANCE;
-		}
-		else if (isspace(temp[k]))
-		{
-			printf("Cant include whitespace!\n");
+			printf("Balence MUST be a number and no whitespace!\n");
 			goto BALANCE;
 		}
 	}
@@ -145,7 +196,7 @@ void ChangePassword(Account* p)
 	TOP:
 	printf("Enter new password: ");
 	gets(temp);
-	if (strlen(temp) > 6)
+	if (strlen(temp) > 6 || strlen(temp) <= 0)
 	{
 		printf("Incorrect password length, max 6 characters!\n");
 		goto TOP;
@@ -265,6 +316,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 			printf("What field do you want to change?: ");
 			scanf("%d", &choice);
 			while (getchar() != '\n');
+			
 			switch (choice)
 			{
 				case 1:
@@ -391,6 +443,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 					goto CHOICE;
 				}
 			}
+			break;
 		}
 	}
 	
@@ -412,10 +465,10 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 *************************************************************/
 void DeleteCustomerAccount(Account data[], int numAccounts)
 {
-	/* FIX THIS!!!!!!
+
 	
 	
-	
+	/*
 	char ID[6];
 	printf("Enter account ID to delete: ");
 	scanf("%5s", ID);
@@ -430,6 +483,7 @@ void DeleteCustomerAccount(Account data[], int numAccounts)
 		}
 	}
 	*/
+	printf("\nDeleteCustomerAccount function corrupts data file. Could not safetly implement\n\n");
 }
 
 /*************************************************************
