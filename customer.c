@@ -49,11 +49,16 @@ void depositMoney(Account* accountCurr)
 	inputDeposit:
 	printf("Enter amount to deposit(maximum of $5000): ");
 	scanf("%lf", &amountToDeposit);
+	
+	//making sure the deposit amount is valid
 	if((amountToDeposit <= 0) || (amountToDeposit > MAX_TRANSACTION))
 	{
 		printf("Invalid deposit amount\n");
+		//repeating if not valid
 		goto inputDeposit;
 	}
+	
+	//adding the deposit to the balance
 	accountCurr -> balance += amountToDeposit;
 	printf("New balance: %.2lf\n\n", accountCurr->balance);
 }
@@ -76,8 +81,19 @@ void transferMoney(Account* accountCurr, Account p[])
 	char accountID[6];
 	
 	inputID:
+	//accessing other account's ID
 	printf("Enter account number to transfer to: ");
 	scanf("%s", accountID);
+	
+	
+	//making sure that money will not transfer to the same account
+	if (strcmp(accountID, accountCurr -> accountID) == 0)
+	{
+		printf(" \n Cannot transfer to same account, please enter a valid user ID. \n");
+		goto inputID;
+	}
+	
+	//making sure the account to transfer to is valid
 	for(int n = 0; n < strlen(accountID); n++)
 	{
 		if((strlen(accountID) > 5) || (isdigit(accountID[n]) == false))
@@ -86,27 +102,35 @@ void transferMoney(Account* accountCurr, Account p[])
 			goto inputID;
 		}
 	}
+	
 	inputTransfer:
 	printf("Enter amount to transfer to %s :", accountID);
 	scanf("%lf", &amountToTransfer);
 	
+	
+	//making sure they are transfering a valid amount of money
 	if(amountToTransfer <= 0 || amountToTransfer > MAX_TRANSACTION)
 	{
 		printf("Invalid amount:\n");
 		goto inputTransfer;
 	}
 	
+	//making sure the user cannot give more than they have
 	if(amountToTransfer > accountCurr -> balance)
 	{
 		printf("Insufficient funds, re-enter amount or contact administrator for assistance. \n");
 		goto inputTransfer;
 	}
 
+	//checking every user for the correct account to transfer to
 	for(int i = 0; i < MAX_CUSTOMERS; i++)
 	{
 		if(strcmp(p[i].accountID, accountID) == 0)
 		{
+			//subtracting the amount from the current account
 			accountCurr -> balance -= amountToTransfer;
+			
+			//adding the amount to the specified account
 			p[i].balance += amountToTransfer;
 			break;
 		}
@@ -125,23 +149,29 @@ void transferMoney(Account* accountCurr, Account p[])
 *******************************************************************************************/
 void withdrawMoney(Account* accountCurr)
 {
+	
 	double amountToWithdraw;
 	inputWithdraw:
+	
+	//entering amount to withdraw
 	printf("Enter amount of money to withdraw: ");
 	scanf("%lf", &amountToWithdraw);
+
+	//making sure the user withdraws a positive number
 	if(amountToWithdraw <= 0)
 	{
 		printf("Invalid amount:\n");
 		goto inputWithdraw;
 	}
 	
+	//making sure they do not withdraw more than they have
 	if(amountToWithdraw > accountCurr -> balance)
 	{
 		printf("Insufficient funds, re-enter amount or contact administrator for assistance. \n");
 		goto inputWithdraw;
 	}
 	
-	
+	//subtracting the money from their balance
 	accountCurr->balance -= amountToWithdraw;
 	printf("%lf\n", accountCurr->balance);
 }
