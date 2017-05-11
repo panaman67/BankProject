@@ -1,3 +1,10 @@
+//Name: Nicholas Paladino
+//		James Sigler
+//Section: 502
+//Purpose: To declare function prototypes for customer.c file
+
+
+
 //header file protection
 #ifndef CUST_H
 #define CUST_H
