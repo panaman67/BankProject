@@ -26,7 +26,7 @@ int StructCmp(const void *a, const void *b)
 { 
     Account* ia = (Account*)a;
     Account* ib = (Account*)b;
-    return (int)(100.f*ia->balance - 100.f*ib->balance);
+    return (int)(100.f * ia->balance - 100.f * ib->balance);
 	/* float comparison: returns negative if b > a 
 	and positive if a > b. We multiplied result by 100.0
 	to preserve decimal fraction */
@@ -44,6 +44,7 @@ int StructCmp(const void *a, const void *b)
 ********************************************************************************/
 void CreateCustomerAccount(Account data[], int pos, int* accNum)
 {
+	//temp string
 	char temp[50];
 	data[pos].status = CUSTOMER;
 	
@@ -175,11 +176,12 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 			goto BALANCE;
 		}
 	}
+	//set the accounts balence to the string to double conversion of temp
 	data[pos].balance = atof(temp);
 	
-	
+	//store the value of accNum in the account ID 
 	sprintf(data[pos].accountID, "%d", *accNum += 4);
-	
+	//call to viewAccountInfo
 	viewAccountInfo(&data[pos]);
 }
 
@@ -249,6 +251,7 @@ void ViewCustomerInfo(Account data[], int numAccounts)
 	{
 		if (strcmp(data[i].accountID, ID) == 0)
 		{
+			//if status equals 1 then print ADMIN, else print CUSTOMER
 			printf("\n\nStatus: %s\n", data[i].status == 1 ? "ADMIN" : "CUSTOMER");
 			printf("First Name: %s\n", data[i].firstName);
 			printf("Last Name: %s\n", data[i].lastName);
@@ -275,8 +278,6 @@ void ViewCustomerInfo(Account data[], int numAccounts)
  Return value: none
  Side Effects: Changes fields of account chosen in data array
 *************************************************************/
-
-//INPUT VALIDATE!!!
 void ChangeCustomerInfo(Account data[], int numAccounts)
 {
 	char temp[50];
@@ -465,9 +466,6 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 *************************************************************/
 void DeleteCustomerAccount(Account data[], int numAccounts)
 {
-
-	
-	
 	/*
 	char ID[6];
 	printf("Enter account ID to delete: ");
@@ -514,7 +512,7 @@ void ShowTopFive(Account data[])
  Return value: none
  Side Effects: none
 *************************************************************/
-void ShowAccountsAlpha(Account data[])
+void ShowAccountsAlpha(Account data[], int numAccounts)
 {
 	char letter;
 	printf("Show accounts of last name starting with: ");
@@ -522,7 +520,7 @@ void ShowAccountsAlpha(Account data[])
 	letter = toupper(letter);
 	printf("ACC#          FName           LName                  Balance\n");
 	printf("------------------------------------------------------------\n");
-	for (int i = 0; i < MAX_CUSTOMERS; i++)
+	for (int i = 0; i < numAccounts; i++)
 	{
 		if (data[i].lastName[0] == letter)
 		{

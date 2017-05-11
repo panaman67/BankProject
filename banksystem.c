@@ -32,6 +32,8 @@ int main(int argc, char* argv[])
 	FILE* data;
 	int numAccounts = 0;
 	char* fileName = argv[1];
+	//string for holding input temporarily
+	char temp[50];
 	//integer for account number for new accounts
 	int IDnumberForNewAccount;
 	//Account pointer for logged in account
@@ -40,26 +42,26 @@ int main(int argc, char* argv[])
 	Account accounts[MAX_CUSTOMERS];
 	
 	//print welcome screen
-	printf("\nWelcome to Online Banking/ATM System\n");
+	printf("\nWelcome to Online Banking / ATM System\n");
 	printf("====================================\n\n");
 	
-	char temp[100];
 	
 	LOGIN_ID:
 	//prompt user for ID and password
 	printf("Enter your Customer/Admin ID: ");
-	scanf("%s", temp);
+	gets(temp);
 	
 	if (strlen(temp) != 5)
 	{
 		printf("ID length incorrect, must be 5 characters.\n");
 		goto LOGIN_ID;
 	}
+	//copy string into ID
 	strcpy(ID, temp);
 	
 	LOGIN_PASS:
 	printf("Enter your Customer/Admin Password: ");
-	scanf("%s", temp);
+	gets(temp);
 	
 	if (strlen(temp) > 6 && strcmp(temp, "admin") != 0)
 	{
@@ -68,9 +70,10 @@ int main(int argc, char* argv[])
 	}
 	strcpy(password, temp);
 	
-	
+	//open file for reading
 	data = fopen(fileName, "r");
 	DownloadCustomers(data, accounts, &numAccounts, &IDnumberForNewAccount);
+	//close file
 	fclose(data);
 	
 	
@@ -81,10 +84,12 @@ int main(int argc, char* argv[])
 	{
 		if (strcmp(accounts[i].accountID, ID) == 0 && strcmp(accounts[i].password, password) == 0)
 		{
+			//set accountCurr pointer to point at account at i in accounts array
 			accountCurr = &accounts[i];
 			break;
 		}
 	}
+	//if looped through and no account found
 	if (i >= numAccounts)
 	{
 		printf("No account found with this login info!\n");
@@ -105,6 +110,7 @@ int main(int argc, char* argv[])
 
 			printf("Enter an option: ");
 			scanf("%d", &choice);
+			//clears input buffer
 			while(getchar() != '\n');
 			
 			data = fopen(fileName, "r");
@@ -146,7 +152,7 @@ int main(int argc, char* argv[])
 				}
 				case 7:
 				{
-					ShowAccountsAlpha(accounts);
+					ShowAccountsAlpha(accounts, numAccounts);
 					break;
 				}
 				case 8:
@@ -159,6 +165,7 @@ int main(int argc, char* argv[])
 					printf("Not vlaid choice!\n");
 				}
 			}
+			//open file with write privilages
 			data = fopen(fileName, "w");
 			UploadCustomers(data, accounts, numAccounts);
 			fclose(data);
@@ -221,9 +228,10 @@ int main(int argc, char* argv[])
 				}
 				default:
 				{
-					printf("Not vlaid choice!\n");
+					printf("Not valid choice!\n");
 				}
 			}
+			//open file with write privilages
 			data = fopen(fileName, "w");
 			UploadCustomers(data, accounts, numAccounts);
 			fclose(data);

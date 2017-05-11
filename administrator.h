@@ -36,7 +36,7 @@ void ViewCustomerInfo(Account data[], int numAccounts);
 void ChangeCustomerInfo(Account data[], int numAccounts);
 void DeleteCustomerAccount(Account data[], int numAccounts);
 void ShowTopFive(Account data[]);
-void ShowAccountsAlpha(Account data[]);
+void ShowAccountsAlpha(Account data[], int numAccounts);
 
 //end header protection 
 #endif
