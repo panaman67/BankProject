@@ -470,7 +470,8 @@ void DeleteCustomerAccount(Account data[], int numAccounts)
 	char ID[6];
 	printf("Enter account ID to delete: ");
 	scanf("%5s", ID);
-	
+	fflush();
+
 	for (int i = 0; i < numAccounts; i++)
 	{
 		if (strcmp(data[i].accountID, ID) == 0)

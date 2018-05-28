@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 	
 	//print welcome screen
 	printf("\nWelcome to Online Banking / ATM System\n");
-	printf("====================================\n\n");
+	printf(  "======================================\n\n");
 	
 	
 	LOGIN_ID:
