@@ -197,7 +197,9 @@ void ChangePassword(Account* p)
 	char temp[50];
 	TOP:
 	printf("Enter new password: ");
-	gets(temp);
+	//gets(temp);
+	scanf("%[^\n]", temp);
+
 	if (strlen(temp) > 6 || strlen(temp) <= 0)
 	{
 		printf("Incorrect password length, max 6 characters!\n");

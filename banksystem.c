@@ -49,8 +49,9 @@ int main(int argc, char* argv[])
 	LOGIN_ID:
 	//prompt user for ID and password
 	printf("Enter your Customer/Admin ID: ");
-	gets(temp);
-	
+	//gets(temp);
+	fgets(temp, sizeof(temp), stdin);	
+
 	if (strlen(temp) != 5)
 	{
 		printf("ID length incorrect, must be 5 characters.\n");
@@ -61,7 +62,7 @@ int main(int argc, char* argv[])
 	
 	LOGIN_PASS:
 	printf("Enter your Customer/Admin Password: ");
-	gets(temp);
+	scanf("%[^\n]s", temp);
 	
 	if (strlen(temp) > 6 && strcmp(temp, "admin") != 0)
 	{
