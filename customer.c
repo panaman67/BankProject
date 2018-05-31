@@ -1,11 +1,10 @@
 /*
-Name: Nicholas Paladino 
-	  James Sigler
+Name: Nicholas Paladino
+      James Sigler
 	  
 Section: 502
 Purpose: To create functions and give the their functionality 
-		 when accessing the user account type in main meniu
-
+	 when accessing the user account type in main menu
 */
 
 #include <stdio.h>
@@ -14,9 +13,7 @@ Purpose: To create functions and give the their functionality
 #include <ctype.h>
 
 //include header files
-
 #include "customer.h"
-#include "administrator.h"
 
 #define MAX_TRANSACTION 5000
 
@@ -89,7 +86,7 @@ void transferMoney(Account* accountCurr, Account p[])
 	//making sure that money will not transfer to the same account
 	if (strcmp(accountID, accountCurr -> accountID) == 0)
 	{
-		printf(" \n Cannot transfer to same account, please enter a valid user ID. \n");
+		printf("\n Cannot transfer to same account, please enter a valid user ID. \n");
 		goto inputID;
 	}
 	
@@ -104,14 +101,14 @@ void transferMoney(Account* accountCurr, Account p[])
 	}
 	
 	inputTransfer:
-	printf("Enter amount to transfer to %s :", accountID);
+	printf("Enter amount to transfer to %s : ", accountID);
 	scanf("%lf", &amountToTransfer);
 	
 	
 	//making sure they are transfering a valid amount of money
 	if(amountToTransfer <= 0 || amountToTransfer > MAX_TRANSACTION)
 	{
-		printf("Invalid amount:\n");
+		printf("Invalid amount\n");
 		goto inputTransfer;
 	}
 	
@@ -160,7 +157,7 @@ void withdrawMoney(Account* accountCurr)
 	//making sure the user withdraws a positive number
 	if(amountToWithdraw <= 0)
 	{
-		printf("Invalid amount:\n");
+		printf("Invalid amount\n");
 		goto inputWithdraw;
 	}
 	
@@ -196,7 +193,3 @@ void viewAccountInfo(Account* p)
 	printf("Account ID: %s\n", p->accountID);
 	printf("Balance: %.2f\n\n", p->balance);
 }
-
-
-
-
