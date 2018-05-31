@@ -50,7 +50,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	FN:
 	printf("Enter new first name: ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 	
 	if (strlen(temp) > 8 || strlen(temp) <= 0)
 	{
@@ -69,7 +69,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	LN:
 	printf("Enter new last name: ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 	
 	if (strlen(temp) > 8 || strlen(temp) <= 0)
 	{
@@ -88,7 +88,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	CITY:
 	printf("Enter new city name: ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 	
 	if (strlen(temp) > 10 || strlen(temp) <= 0)
 	{
@@ -107,7 +107,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	STATE:
 	printf("Enter new state (2 character abbrev. ex: TX): ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 	
 	if (strlen(temp) != 2)
 	{
@@ -126,7 +126,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	PHONE:
 	printf("Enter new phone number (XXX-XXXX): ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 					
 	if (strlen(temp) != 8)
 	{
@@ -151,7 +151,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	PASS:
 	printf("Enter password (6 character max): ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 	if (strlen(temp) > 6 || strlen(temp) <= 0)
 	{
 		printf("Password MUST be between 1 and 6 characters\n");
@@ -162,7 +162,7 @@ void CreateCustomerAccount(Account data[], int pos, int* accNum)
 	
 	BALANCE:
 	printf("Enter starting balance: ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 	if (strlen(temp) <= 0 || strlen(temp) > 10)
 	{
 		printf("Must enter a number within bounds\n");
@@ -197,8 +197,7 @@ void ChangePassword(Account* p)
 	char temp[50];
 	TOP:
 	printf("Enter new password: ");
-	//gets(temp);
-	scanf("%[^\n]", temp);
+	fscanf(stdin, "%s", temp);
 
 	if (strlen(temp) > 6 || strlen(temp) <= 0)
 	{
@@ -231,7 +230,8 @@ void ViewCustomerInfo(Account data[], int numAccounts)
 	char temp[20];
 	TOP:
 	printf("Enter account ID to observe: ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
+
 	if (strlen(temp) != 5)
 	{
 		printf("Incorrect ID length, MUST be 5 numbers.\n");
@@ -288,7 +288,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 	
 	TOP:
 	printf("Enter account ID to change: ");
-	gets(temp);
+	fscanf(stdin, "%s", temp);
 	if (strlen(temp) != 5)
 	{
 		printf("ID MUST be 5 digits!\n");
@@ -326,7 +326,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 				{
 					FIRST:
 					printf("Enter new first name: ");
-					gets(temp);
+					fscanf(stdin, "%s", temp);
 					
 					if (strlen(temp) > 8)
 					{
@@ -349,7 +349,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 				{
 					LAST:
 					printf("Enter new last name: ");
-					gets(temp);
+					fscanf(stdin, "%s", temp);
 					
 					if (strlen(temp) > 8)
 					{
@@ -372,7 +372,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 				{
 					CITY:
 					printf("Enter new city name: ");
-					gets(temp);
+					fscanf(stdin, "%s", temp);
 					
 					if (strlen(temp) > 10)
 					{
@@ -395,7 +395,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 				{
 					STATE:
 					printf("Enter new state (2 character abbrev. ex: TX): ");
-					gets(temp);
+					fscanf(stdin, "%s", temp);
 					
 					if (strlen(temp) != 2)
 					{
@@ -417,7 +417,7 @@ void ChangeCustomerInfo(Account data[], int numAccounts)
 				{
 					PN:
 					printf("Enter new phone number (XXX-XXXX): ");
-					gets(temp);
+					fscanf(stdin, "%s", temp);
 					
 					if (strlen(temp) != 8)
 					{

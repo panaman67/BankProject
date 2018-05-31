@@ -262,14 +262,14 @@ void DownloadCustomers(FILE* input, Account p[], int* numAccounts, int* accID)
 	while (i < MAX_CUSTOMERS)
 	{
 		fscanf(input, "%d %s %s %s %s %s %s %s %lf", &p[i].status,
-												      p[i].firstName,
-												      p[i].lastName,
-												      p[i].city,
-												      p[i].state,
-												      p[i].phoneNumber,
-												      p[i].accountID,
-												      p[i].password,
-												     &p[i].balance);
+				                              p[i].firstName,
+							      p[i].lastName,
+							      p[i].city,
+							      p[i].state,
+							      p[i].phoneNumber,
+							      p[i].accountID,
+							      p[i].password,
+							     &p[i].balance);
 		i++;
 	}
 	
@@ -303,14 +303,14 @@ void UploadCustomers(FILE* output, Account p[], int numAccounts)
 	{
 		
 		fprintf(output, "%d %s %s %s %s %s %s %s %.2lf\r\n", p[i].status,
-														     p[i].firstName,
-														     p[i].lastName,
-														     p[i].city,
-														     p[i].state,
-														     p[i].phoneNumber,
-														     p[i].accountID,
-														     p[i].password,
-														     p[i].balance);
+				                                     p[i].firstName,
+								     p[i].lastName,
+								     p[i].city,
+								     p[i].state,
+								     p[i].phoneNumber,
+								     p[i].accountID,
+								     p[i].password,
+								     p[i].balance);
 		i++;
 	}
 }
