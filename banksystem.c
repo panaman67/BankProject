@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 	int numAccounts = 0;
 	char* fileName = argv[1];
 	//string for holding input temporarily
-	char* temp;
+	char temp[75];
 	//integer for account number for new accounts
 	int IDnumberForNewAccount;
 	// int for how long temp string is
@@ -51,11 +51,7 @@ int main(int argc, char* argv[])
 	LOGIN_ID:
 	//prompt user for ID and password
 	printf("Enter your Customer/Admin ID: ");
-	//gets(temp);
-	fgets(temp, MAX_LENGTH_LOGIN + 1, stdin);
-	//scanf("%s\n", temp);
-	//fflush(stdin);
-	//getline(&temp, &length, stdin);
+	fscanf(stdin, "%s", temp);
 
 	if (strlen(temp) != 5)
 	{
@@ -67,7 +63,7 @@ int main(int argc, char* argv[])
 	
 	LOGIN_PASS:
 	printf("Enter your Customer/Admin Password: ");
-	scanf("%[^\n]s", temp);
+	fscanf(stdin, "%s", temp);
 	
 	if (strlen(temp) > 6 && strcmp(temp, "admin") != 0)
 	{
