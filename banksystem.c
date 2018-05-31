@@ -105,8 +105,7 @@ int main(int argc, char* argv[])
 	if (accountCurr->status == ADMIN)
 	{
 		while(1)
-		{
-			
+		{	
 			//display menu
 			DisplayMenu(ADMIN);
 
@@ -173,7 +172,6 @@ int main(int argc, char* argv[])
 			fclose(data);
 		}
 	}
-
 	
 	//  CUSTOMER
 	if (accountCurr->status == CUSTOMER)
@@ -183,13 +181,11 @@ int main(int argc, char* argv[])
 			data = fopen(fileName, "r");
 			DownloadCustomers(data, accounts, &numAccounts, &IDnumberForNewAccount);
 			fclose(data);
-			
-			
+					
 			DisplayMenu(CUSTOMER);
 			printf("Enter an option: ");
 			scanf("%d", &choice);
 			while (getchar() != '\n');
-			
 
 			switch (choice)
 			{
@@ -240,7 +236,6 @@ int main(int argc, char* argv[])
 		}
 	}
 	
-
 	//close data file
 	return 0;
 }
@@ -273,18 +268,16 @@ void DownloadCustomers(FILE* input, Account p[], int* numAccounts, int* accID)
 		i++;
 	}
 	
-	int k;
-	for (k = 0; k < MAX_CUSTOMERS; k++)
+	for (i = 0; i < MAX_CUSTOMERS; i++)
 	{
-		if (p[k].status != CUSTOMER && p[k].status != ADMIN)
+		if (p[i].status != CUSTOMER && p[i].status != ADMIN)
 		{
 			break;
 		}
 	}
-	*numAccounts = k;
+	*numAccounts = i;
 	
-	
-	*accID = atoi(p[k - 1].accountID);
+	*accID = atoi(p[i - 1].accountID);
 }
 
 /*************************************************************
@@ -300,8 +293,7 @@ void UploadCustomers(FILE* output, Account p[], int numAccounts)
 {
 	int i = 0;
 	while (i < numAccounts)
-	{
-		
+	{	
 		fprintf(output, "%d %s %s %s %s %s %s %s %.2lf\r\n", p[i].status,
 				                                     p[i].firstName,
 								     p[i].lastName,
