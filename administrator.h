@@ -1,9 +1,9 @@
 /*
 Names:   Nicholas Paladino
-	     James Sigler
+	 James Sigler
 Section: 502
 Purpose: To declare function prototypes for admin
-		 and to define Account struct
+	 and to define Account struct
 */
 
 //header file protection
