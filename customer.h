@@ -3,15 +3,12 @@
 //Section: 502
 //Purpose: To declare function prototypes for customer.c file
 
-
-
 //header file protection
 #ifndef CUST_H
 #define CUST_H
 
 //include admin header for Account struct use
 #include "administrator.h"
-
 
 //function prototypes
 void ViewBalance(Account* accountCurr);
