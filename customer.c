@@ -185,11 +185,10 @@ void withdrawMoney(Account* accountCurr)
 
 void viewAccountInfo(Account* p)
 {
-	printf("\nFirst Name: %s\n", p->firstName);
-	printf("Last Name: %s\n", p->lastName);
-	printf("City: %s\n", p->city);
-	printf("State: %s\n", p->state);
-	printf("Phone Number: %s\n", p->phoneNumber);
-	printf("Account ID: %s\n", p->accountID);
-	printf("Balance: %.2f\n\n", p->balance);
+	printf("\nFirst Name: %s\n%s\n%s\n%s\n%s\n%s\n", p->firstName,
+							 p->lastName,
+							 p->city,
+							 p->state,
+							 p->phoneNumber,
+							 p->accountID);
 }
