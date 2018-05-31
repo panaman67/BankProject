@@ -33,9 +33,11 @@ int main(int argc, char* argv[])
 	int numAccounts = 0;
 	char* fileName = argv[1];
 	//string for holding input temporarily
-	char temp[50];
+	char* temp;
 	//integer for account number for new accounts
 	int IDnumberForNewAccount;
+	// int for how long temp string is
+	size_t length = MAX_LENGTH_LOGIN;
 	//Account pointer for logged in account
 	Account* accountCurr;
 	//Account array
@@ -50,7 +52,10 @@ int main(int argc, char* argv[])
 	//prompt user for ID and password
 	printf("Enter your Customer/Admin ID: ");
 	//gets(temp);
-	fgets(temp, sizeof(temp), stdin);	
+	fgets(temp, MAX_LENGTH_LOGIN + 1, stdin);
+	//scanf("%s\n", temp);
+	//fflush(stdin);
+	//getline(&temp, &length, stdin);
 
 	if (strlen(temp) != 5)
 	{
