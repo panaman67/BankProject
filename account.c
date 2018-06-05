@@ -1,25 +1,41 @@
 #include "account.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 node createNode()
 {
 	node temp;
-
+	temp = (node)malloc(sizeof(struct account));
+	temp->next = NULL;
 	return temp;
 }
 
-bool addNode(node HEAD, node added)
+node addNode(node HEAD, node added)
 {
-	node temp = HEAD;
-	while (temp->next != NULL)
+	node temp, p;
+	temp = createNode();
+	temp->accID = 1234;
+
+	p = HEAD;
+	while (p->next != NULL)
+		p = p->next;
+	p->next = temp;
+	return HEAD;
+}
+
+node deleteNode(node HEAD, int accID)
+{
+	return NULL;
+}
+
+void printAccounts(node HEAD)
+{
+	int i = 0;
+	node temp;
+	temp = HEAD;
+	while (temp != NULL)
+	{
+		printf("%d\n", temp->accID);
 		temp = temp->next;
-	temp->next = added;
-	return true;
+	}
 }
-
-bool deleteNode(node HEAD, int accID)
-{
-	return false;
-}
-
-

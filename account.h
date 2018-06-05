@@ -25,8 +25,9 @@ struct account
 typedef struct account* node;
 
 node createNode();
-bool addNode(node HEAD, node added);
-bool deleteNode(node HEAD, int accID);
+node addNode(node HEAD, node added);
+node deleteNode(node HEAD, int accID);
+void printAccounts(node HEAD);
 
 
 #endif
