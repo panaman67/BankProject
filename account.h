@@ -1,28 +1,32 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-typedef struct
+#include<stdbool.h>
+
+struct person
 {
-	char*     firstName;
-	char*     lastName;
-	char*     city;
-	char*     state;
-} personalInfo;
+	char*            firstName;
+	char*            lastName;
+	char*            phoneNumber;
+	char*            city;
+	char*            state;
+};
 
-
-
-
-typedef struct account account;
-typedef struct account
+struct account
 {
-	short     isAdmin;
-	float     balance;
-	account*  next;
-} Accounts; // Bikeshedd name
+	bool             isAdmin;
+	int              accID;
+	char*            password;
+	float            balance;
+	struct person    info;
+	struct account*  next;
+};
 
+typedef struct account* node;
 
-
-
+node insert(int idx, node added);
+node add(node HEAD, node added);
+void deleteNode(int accID);
 
 
 #endif

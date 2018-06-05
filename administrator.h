@@ -19,13 +19,13 @@ Purpose: To declare function prototypes for admin
 //define structure for account
 typedef struct
 {
-	int status;
-	char firstName[9], lastName[9];
-	char city[11];
-	char state[3];
-	char phoneNumber[9];
-	char accountID[6];   //MAX 5 digits
-	char password[7];
+	int    status;
+	char   firstName[9], lastName[9];
+	char   city[11];
+	char   state[3];
+	char   phoneNumber[9];
+	char   accountID[6];   //MAX 5 digits
+	char   password[7];
 	double balance;
 } Account;
 
