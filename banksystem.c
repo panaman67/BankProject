@@ -9,7 +9,6 @@ Purpose: To simulate a banking system
 #include <string.h>
 #include <ctype.h>
 
-#include "administrator.h"
 #include "customer.h"
 
 //function prototypes
