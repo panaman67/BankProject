@@ -2,30 +2,39 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-node createNode()
+Node CreateNode()
 {
-	node temp;
-	temp = (node)malloc(sizeof(struct account));
+	Node temp;
+	temp = (Node)malloc(sizeof(struct data));
 	temp->next = NULL;
 	return temp;
 }
 
-node addNode(node HEAD, node added)
+void AddNode(Node head, struct node toAdd)
 {
-	node temp, p;
-	temp = createNode();
-	temp->accID = 1234;
+	node new_node, last;
+	new_node = createNode();
 
-	p = HEAD;
-	while (p->next != NULL)
-		p = p->next;
-	p->next = temp;
-	return HEAD;
+	last = *head;
+	new_node->account = toAdd;
+	new_node->next = NULL;
+
+	if (*head == NULL)
+	{
+		*head = new_node;
+		return;
+	}
+
+	while (last->next != NULL)
+		last = last->next;
+
+	last->next = new_node;
+	return;
 }
 
-node deleteNode(node HEAD, int accID)
+void DeleteNode(node HEAD, int accID)
 {
-	return NULL;
+	return;
 }
 
 void printAccounts(node HEAD)

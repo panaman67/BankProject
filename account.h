@@ -3,7 +3,7 @@
 
 #include<stdbool.h>
 
-struct person
+struct personal
 {
 	char*            firstName;
 	char*            lastName;
@@ -18,16 +18,21 @@ struct account
 	int              accID;
 	char*            password;
 	float            balance;
-	struct person    info;
-	struct account*  next;
 };
 
-typedef struct account* node;
+typedef struct Node
+{
+	struct personal  pers;      
+	struct account   info;
+	struct Node*     next;
+} Node;
 
-node createNode();
-node addNode(node HEAD, node added);
-node deleteNode(node HEAD, int accID);
-void printAccounts(node HEAD);
+typedef Node* List;
+
+Node createNode();
+void AddNode(List head, Node toAdd);
+void DeleteNode(List head, int accID);
+void printAccounts(Node head);
 
 
 #endif
