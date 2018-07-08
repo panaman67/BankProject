@@ -34,11 +34,11 @@ void DownloadCustomers(FILE* input, Node acclist, int* accID)
 
 	while (fscanf(input, "%d %s %s %s %s %s %d %s %f", 
 				&adminStatus,
-				user->info.firstName,
-				user->info.lastName,
-				user->info.city,
-				user->info.state,
-				user->info.phoneNumber,
+				user->firstName,
+				user->lastName,
+				user->city,
+				user->state,
+				user->phoneNumber,
 				&user->accID,
 				user->password,
 				&user->balance) != EOF)
