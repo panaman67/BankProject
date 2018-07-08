@@ -20,7 +20,8 @@ typedef struct List
 typedef List* Node;
 
 Node CreateNode();
-void AddNode(Node head, int accID);
+void AddNodeTest(Node HEAD, int accID);
+void AddNode(Node HEAD, Node newNode);
 void printAccounts(Node head);
 
 #endif

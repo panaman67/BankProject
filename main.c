@@ -1,37 +1,43 @@
 #include <stdio.h>
-#include "admin.h"
 #include "account.h"
+#include "admin.h"
 #include "user.h"
+
+void DownloadCustomers(FILE* input, Node acclist);
 
 int main()
 {
 	Node accounts = CreateNode();
+	FILE* accFile;
 	
-	AddNode(accounts, 44);
-	AddNode(accounts, 23);
-	printAccounts(accounts);
+	AddNodeTest(accounts, 44);
+	AddNodeTest(accounts, 23);
 
+	accFile = fopen("CustomerData.txt", "r");
+	DownloadCustomers(accFile, accounts);
+	fclose(accFile);
+
+	printAccounts(accounts);
+	
 	return 0;
 }
 
 
 /*************************************************************
  Name: DownloadCustomers
- Purpose: read lines from file and store in LinkedList
+ Purpose: Read lines from file and store in LinkedList
  Parameters: FILE* input (pointer to file where data is read)
-			 node acclist (array holding Account type)
-			 int* numAccounts (pointer to number of accounts)
-			 int* accID (starting account number to store when new account is added)
- Return value: none
- Side Effects: modifies p array
+             Node  acclist (array holding Account type)
+ Return value: void
+ Side Effects: Modifies accList
 *************************************************************/
 
-void DownloadCustomers(FILE* input, Node acclist, int* accID)
+void DownloadCustomers(FILE* input, Node HEAD)
 {
-	Node temp = acclist;
 	Node user = CreateNode();
 	int adminStatus = 0;
-
+	
+	int num = 1;
 	while (fscanf(input, "%d %s %s %s %s %s %d %s %f", 
 				&adminStatus,
 				user->firstName,
@@ -41,11 +47,12 @@ void DownloadCustomers(FILE* input, Node acclist, int* accID)
 				user->phoneNumber,
 				&user->accID,
 				user->password,
-				&user->balance) != EOF)
+				&user->balance))
 	{
 		user->isAdmin = adminStatus;
-		AddNode(acclist, 1337);
-
+		AddNodeTest(HEAD, 1337);
+		printf("Added user %d\n", num);
+		num++;
 	}
 	// *accID = atoi(p[i - 1].accountID);
 }
@@ -59,22 +66,22 @@ void DownloadCustomers(FILE* input, Node acclist, int* accID)
  Return value: none
  Side Effects: none
 *************************************************************/
-/*
-void UploadCustomers(FILE* output, Account p[], int numAccounts)
+
+void UploadCustomers(FILE* output, Node HEAD)
 {
 	int i = 0;
-	while (i < numAccounts)
+	while (i < 2)
 	{	
-		fprintf(output, "%d %s %s %s %s %s %s %s %.2lf\r\n", p[i].status,
-				                                     p[i].firstName,
-								     p[i].lastName,
-								     p[i].city,
-								     p[i].state,
-								     p[i].phoneNumber,
-								     p[i].accountID,
-								     p[i].password,
-								     p[i].balance);
-		i++;
+		//fprintf(output, "%d %s %s %s %s %s %s %s %.2lf\r\n", p[i].status,
+		//		                                     p[i].firstName,
+		//						     p[i].lastName,
+		//						     p[i].city,
+		//						     p[i].state,
+		//						     p[i].phoneNumber,
+		//						     p[i].accountID,
+		//						     p[i].password,
+		//						     p[i].balance);
+		//i++;
 	}
 }
-*/
+

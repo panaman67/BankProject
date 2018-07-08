@@ -10,7 +10,7 @@ Node CreateNode()
 	return temp;
 }
 
-void AddNode(Node HEAD, int accID)
+void AddNodeTest(Node HEAD, int accID)
 {
 	Node temp, last;
 
