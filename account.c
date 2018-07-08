@@ -10,24 +10,24 @@ Node CreateNode()
 	return temp;
 }
 
-void AddNode(Node head, int accID)
+void AddNode(Node HEAD, int accID)
 {
 	Node temp, last;
-	temp = CreateNode();
 
-	last = head;
+	temp = CreateNode();
+	last = HEAD;
+
 	temp->accID = accID;
 	temp->next = NULL;
 
-	if (head == NULL)
+	if (HEAD == NULL)
 	{
-		head = temp;
+		HEAD = temp;
 		return;
 	}
 
 	while (last->next != NULL)
 		last = last->next;
-
 	last->next = temp;
 	return;
 }
@@ -39,7 +39,6 @@ void DeleteNode(Node HEAD, int accID)
 
 void printAccounts(Node HEAD)
 {
-	int i = 0;
 	Node temp;
 	temp = HEAD;
 	while (temp != NULL)

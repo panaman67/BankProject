@@ -8,6 +8,7 @@ int main()
 	Node accounts = CreateNode();
 	
 	AddNode(accounts, 44);
+	AddNode(accounts, 23);
 	printAccounts(accounts);
 
 	return 0;
@@ -24,11 +25,11 @@ int main()
  Return value: none
  Side Effects: modifies p array
 *************************************************************/
-/*
+
 void DownloadCustomers(FILE* input, Node acclist, int* accID)
 {
 	Node temp = acclist;
-	Node user = createNode();
+	Node user = CreateNode();
 	int adminStatus = 0;
 
 	while (fscanf(input, "%d %s %s %s %s %s %d %s %f", 
@@ -43,12 +44,12 @@ void DownloadCustomers(FILE* input, Node acclist, int* accID)
 				&user->balance) != EOF)
 	{
 		user->isAdmin = adminStatus;
-		AddNode(acclist, &user);
+		AddNode(acclist, 1337);
 
 	}
 	// *accID = atoi(p[i - 1].accountID);
 }
-*/
+
 /*************************************************************
  Name: UploadCustomers
  Purpose: print out array to a file
