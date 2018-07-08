@@ -38,7 +38,7 @@ void DownloadCustomers(FILE* input, Node HEAD)
 	int adminStatus = 0;
 	
 	int num = 1;
-	while (fscanf(input, "%d %s %s %s %s %s %d %s %f", 
+	while (fscanf(input, "%d %s %s %s %s %s %d %s %f\n", 
 				&adminStatus,
 				user->firstName,
 				user->lastName,
