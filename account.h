@@ -3,36 +3,24 @@
 
 #include<stdbool.h>
 
-struct personal
+typedef struct List
 {
-	char*            firstName;
-	char*            lastName;
-	char*            phoneNumber;
-	char*            city;
-	char*            state;
-};
+	struct List*  next;
+	char*         firstName;
+	char*         lastName;
+	char*         phoneNumber;
+	char*         city;
+	char*         state;
+	char*         password;
+	int           accID;
+	float         balance;
+	bool          isAdmin;
+} List;
 
-struct account
-{
-	bool             isAdmin;
-	int              accID;
-	char*            password;
-	float            balance;
-};
+typedef List* Node;
 
-typedef struct Node
-{
-	struct personal  pers;      
-	struct account   info;
-	struct Node*     next;
-} Node;
-
-typedef Node* List;
-
-Node createNode();
-void AddNode(List head, Node toAdd);
-void DeleteNode(List head, int accID);
+Node CreateNode();
+void AddNode(Node head, int accID);
 void printAccounts(Node head);
-
 
 #endif

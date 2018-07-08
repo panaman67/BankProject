@@ -2,8 +2,8 @@
 #define ADMIN_H
 #include "account.h"
 
-void ShowLargestAccounts(node head);
+void ShowLargestAccounts(Node head);
 
-void ShowAccountsByLetter(node head, char let);
+void ShowAccountsByLetter(Node head, char let);
 
 #endif

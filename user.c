@@ -2,7 +2,7 @@
 #include "account.h"
 #include <stdio.h>
 
-void Deposit(node acc, float amt)
+void Deposit(Node acc, float amt)
 {
 	printf("Depositing money into acc: %d\n"
 		"Before: %.2f", acc->accID, acc->balance);

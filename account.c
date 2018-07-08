@@ -5,42 +5,42 @@
 Node CreateNode()
 {
 	Node temp;
-	temp = (Node)malloc(sizeof(struct data));
+	temp = (Node)malloc(sizeof(struct List));
 	temp->next = NULL;
 	return temp;
 }
 
-void AddNode(Node head, struct node toAdd)
+void AddNode(Node head, int accID)
 {
-	node new_node, last;
-	new_node = createNode();
+	Node temp, last;
+	temp = CreateNode();
 
-	last = *head;
-	new_node->account = toAdd;
-	new_node->next = NULL;
+	last = head;
+	temp->accID = accID;
+	temp->next = NULL;
 
-	if (*head == NULL)
+	if (head == NULL)
 	{
-		*head = new_node;
+		head = temp;
 		return;
 	}
 
 	while (last->next != NULL)
 		last = last->next;
 
-	last->next = new_node;
+	last->next = temp;
 	return;
 }
 
-void DeleteNode(node HEAD, int accID)
+void DeleteNode(Node HEAD, int accID)
 {
 	return;
 }
 
-void printAccounts(node HEAD)
+void printAccounts(Node HEAD)
 {
 	int i = 0;
-	node temp;
+	Node temp;
 	temp = HEAD;
 	while (temp != NULL)
 	{
