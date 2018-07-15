@@ -1,8 +1,6 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-#include <stdbool.h>
-
 typedef struct List
 {
 	struct List*  next;
@@ -25,8 +23,7 @@ struct Admin
 typedef List* Node;
 
 Node CreateNode();
-void AddNodeTest(Node HEAD, int accID);
-void AddNode(Node HEAD, Node newNode);
-void PrintAccounts(Node head);
+void AddNode(Node HEAD, List newNode);
+void PrintAccounts(Node HEAD);
 
 #endif

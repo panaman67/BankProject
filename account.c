@@ -1,6 +1,8 @@
-#include "account.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "account.h"
 
 Node CreateNode()
 {
@@ -9,38 +11,34 @@ Node CreateNode()
 	return temp;
 }
 
-void AddNodeTest(Node HEAD, int accID)
+void AddNode(Node HEAD, List add)
 {
 	Node temp, last;
-
 	temp = CreateNode();
 	last = HEAD;
 
-	temp->accID = accID;
-	temp->next = NULL;
-
-	// FIXME: Makes no sense if passed in NULL for HEAD
-	if (HEAD == NULL)
-	{
-		HEAD = temp;
-		return;
-	}
+	strcpy(temp->firstName, add.firstName);
+	strcpy(temp->lastName, add.lastName);
+	strcpy(temp->city, add.city);
+	strcpy(temp->state, add.state);
+	strcpy(temp->phoneNumber, add.phoneNumber);
+	strcpy(temp->password, add.password);
+	temp->accID = add.accID;
+	temp->balance = add.balance;
 
 	while (last->next != NULL)
 		last = last->next;
 	last->next = temp;
-	return;
 }
 
 void DeleteNode(Node HEAD, int accID)
 {
-	return;
+	// TODO
 }
 
 void PrintAccounts(Node HEAD)
 {
-	Node temp;
-	temp = HEAD;
+	Node temp = HEAD;
 	while (temp != NULL)
 	{
 		printf("%d\n", temp->accID);
