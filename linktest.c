@@ -4,15 +4,13 @@
 
 int main()
 {
-	node HEAD, temp;
-	HEAD = (node)malloc(sizeof(struct account));
+	Node HEAD, temp;
+	HEAD = (Node)malloc(sizeof(struct List));
 	HEAD->next = NULL;
 	HEAD->accID = 44444;
 
-	//temp = createNode();
-	HEAD = addNode(HEAD, NULL);
-	//addNode(HEAD, NULL);
-	//printf("%d\n", stat);
+	AddNode(HEAD, NULL);
+
 	printAccounts(HEAD);
 	return 0;
 }

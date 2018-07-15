@@ -1,6 +1,6 @@
 /*
-Names:   Nicholas Paladino
-	 James Sigler
+Names:  Nicholas Paladino
+		James Sigler
 Section: 502
 Purpose: To declare function prototypes for admin
 	 and to define Account struct

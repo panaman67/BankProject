@@ -4,8 +4,7 @@
 
 Node CreateNode()
 {
-	Node temp;
-	temp = (Node)malloc(sizeof(struct List));
+	Node temp = (Node)malloc(sizeof(struct List));
 	temp->next = NULL;
 	return temp;
 }
@@ -20,6 +19,7 @@ void AddNodeTest(Node HEAD, int accID)
 	temp->accID = accID;
 	temp->next = NULL;
 
+	// FIXME: Makes no sense if passed in NULL for HEAD
 	if (HEAD == NULL)
 	{
 		HEAD = temp;
@@ -37,7 +37,7 @@ void DeleteNode(Node HEAD, int accID)
 	return;
 }
 
-void printAccounts(Node HEAD)
+void PrintAccounts(Node HEAD)
 {
 	Node temp;
 	temp = HEAD;

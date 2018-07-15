@@ -30,7 +30,6 @@ void ViewBalance(Account* accountCurr)
 	printf("Your balance is: %.2f\n", accountCurr -> balance);
 }
 
-
 /******************************************************************************************
 * 	Name:	depositMoney
 *	Purpose:	To take a user defined amount and add it to their account's balance.
@@ -59,7 +58,6 @@ void depositMoney(Account* accountCurr)
 	accountCurr -> balance += amountToDeposit;
 	printf("New balance: %.2lf\n\n", accountCurr->balance);
 }
-
 
 /******************************************************************************************
 * 	Name:	transferMoney
@@ -103,8 +101,7 @@ void transferMoney(Account* accountCurr, Account p[])
 	inputTransfer:
 	printf("Enter amount to transfer to %s : ", accountID);
 	scanf("%lf", &amountToTransfer);
-	
-	
+		
 	//making sure they are transfering a valid amount of money
 	if(amountToTransfer <= 0 || amountToTransfer > MAX_TRANSACTION)
 	{
@@ -134,7 +131,6 @@ void transferMoney(Account* accountCurr, Account p[])
 	}
 	
 }
-
 
 /******************************************************************************************
 * 	Name:	withdrawMoney
@@ -173,7 +169,6 @@ void withdrawMoney(Account* accountCurr)
 	printf("%lf\n", accountCurr->balance);
 }
 
-
 /******************************************************************************************
 * 	Name:	viewAccountInfo
 *	Purpose:	To display all of the users information excluding their password.
@@ -182,13 +177,12 @@ void withdrawMoney(Account* accountCurr)
 *				
 *	Side effects: None
 *******************************************************************************************/
-
 void viewAccountInfo(Account* p)
 {
 	printf("\nFirst Name: %s\n%s\n%s\n%s\n%s\n%s\n", p->firstName,
-							 p->lastName,
-							 p->city,
-							 p->state,
-							 p->phoneNumber,
-							 p->accountID);
+													 p->lastName,
+													 p->city,
+													 p->state,
+													 p->phoneNumber,
+													 p->accountID);
 }

@@ -1,72 +1,83 @@
 #include <stdio.h>
+#include <string.h>
 #include "account.h"
 #include "admin.h"
 #include "user.h"
 
-void DownloadCustomers(FILE* input, Node acclist);
+Node DownloadCustomers(FILE* input);
+Node LoadAccounts(FILE* input);
+void StoreAccoubnts(FILE* output);
 
 int main()
 {
-	Node accounts = CreateNode();
+	//Node accounts = CreateNode();
+	Node accList = NULL;
 	FILE* accFile;
 	
-	AddNodeTest(accounts, 44);
-	AddNodeTest(accounts, 23);
+	//AddNodeTest(accounts, 44);
+	//AddNodeTest(accounts, 23);
 
 	accFile = fopen("CustomerData.txt", "r");
-	DownloadCustomers(accFile, accounts);
+	//accList = DownloadCustomers(accFile);
+	accList = LoadAccounts(accFile);
 	fclose(accFile);
 
-	printAccounts(accounts);
+	//printf("%ld\n", sizeof(List));
+
+	PrintAccounts(accList);
 	
 	return 0;
 }
 
-
 /*************************************************************
- Name: DownloadCustomers
+ Name: LoadCustomers
  Purpose: Read lines from file and store in LinkedList
  Parameters: FILE* input (pointer to file where data is read)
-             Node  acclist (array holding Account type)
- Return value: void
- Side Effects: Modifies accList
+ Return value: Node (Head of list)
+ Side Effects: Modifies HEAD
 *************************************************************/
-
-void DownloadCustomers(FILE* input, Node HEAD)
+Node LoadAccounts(FILE* input)
 {
-	Node user = CreateNode();
-	int adminStatus = 0;
-	
-	int num = 1;
-	while (fscanf(input, "%d %s %s %s %s %s %d %s %f\n", 
-				&adminStatus,
-				user->firstName,
-				user->lastName,
-				user->city,
-				user->state,
-				user->phoneNumber,
-				&user->accID,
-				user->password,
-				&user->balance))
+	Node HEAD = CreateNode();
+	Node temp = CreateNode();
+	List user;
+	//char buffer[30]; 
+
+	// do
+	// {
+	// 	fscanf(input, "%s", buffer);
+	// 	printf("%s", buffer);
+	// } while (getchar() != '\n');
+	//while (fscanf(input, "%s", buffer) > 0)
+	//{
+	//	printf("%s\n", buffer);
+	//}
+
+	while (fscanf(input, "%s %s %s %s %s %d %s %lf",	user.firstName,
+														user.lastName,
+														user.city,
+														user.state,
+														user.phoneNumber,
+														&user.accID,
+														user.password,
+														&user.balance) > 0)
 	{
-		user->isAdmin = adminStatus;
+		*temp = user;
 		AddNodeTest(HEAD, 1337);
-		printf("Added user %d\n", num);
-		num++;
+		printf("%lf\n", user.balance);
 	}
-	// *accID = atoi(p[i - 1].accountID);
+
+	return HEAD;
 }
 
 /*************************************************************
  Name: UploadCustomers
- Purpose: print out array to a file
+ Purpose: Print out List to a file
  Parameters: FILE* output (pointer to file where array printed)
-			 Account p[] (array holding Account type)
-			 int numAccounts (number of accounts to write to file)
+			 Node HEAD (Pointer to head of list)
  Return value: none
  Side Effects: none
 *************************************************************/
-
 void UploadCustomers(FILE* output, Node HEAD)
 {
 	int i = 0;
@@ -81,7 +92,8 @@ void UploadCustomers(FILE* output, Node HEAD)
 		//						     p[i].accountID,
 		//						     p[i].password,
 		//						     p[i].balance);
-		//i++;
+		i++;
 	}
 }
+
 
