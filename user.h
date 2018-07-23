@@ -1,5 +1,6 @@
 #ifndef USER_H
 #define USER_H
+
 #include "account.h"
 
 void ChangePassword(Node Account, char* newPassword);

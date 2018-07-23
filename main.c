@@ -10,28 +10,30 @@ void StoreAccounts(FILE* output, Node HEAD);
 int main()
 {
 	FILE* accFile;
-	Node accList;
+	//Node accData;
+	Node test = NULL;
+	test = CreateNode();
 
-	accFile = fopen("CustomerData.txt", "r");
-	accList = LoadAccounts(accFile);
-	fclose(accFile);
+	//accFile = fopen("CustomerData.txt", "r");
+	//accData = LoadAccounts(accFile);
+	//fclose(accFile);
 
-	PrintAccounts(accList);
+	PrintAccounts(test);
 	
 	return 0;
 }
 
 /*************************************************************
  Name: LoadAccounts
- Purpose: Read lines from file and store in LinkedList
+ Purpose: Read lines from file and store in LinkedData
  Parameters: FILE* input (pointer to file where data is read)
- Return value: Node (Head of list)
+ Return value: Node (Head of Data)
  Side Effects: Modifies HEAD
 *************************************************************/
 Node LoadAccounts(FILE* input)
 {
 	Node HEAD = CreateNode();
-	List user;
+	Data user;
 
 	while (fscanf(input, "%s %s %s %s %s %d %s %lf",	user.firstName,
 														user.lastName,
@@ -49,7 +51,7 @@ Node LoadAccounts(FILE* input)
  Name: StoreAccounts
  Purpose: Store accounts to file
  Parameters: FILE* output (pointer to file where array printed)
-			 Node HEAD (Pointer to head of list)
+			 Node HEAD (Pointer to head of Data)
  Return value: none
  Side Effects: Changes content of output file
 *************************************************************/

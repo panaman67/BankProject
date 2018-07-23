@@ -1,9 +1,9 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-typedef struct List
+typedef struct Data
 {
-	struct List*  next;
+	struct Data*  next;
 	char          firstName[10];
 	char          lastName[10];
 	char          phoneNumber[10];
@@ -12,18 +12,15 @@ typedef struct List
 	double        balance;
 	int           accID;
 	char          state[10];
-} List;
+} Data;
 
-struct Admin
-{
-	int ID;
-	char password[10];
-};
-
-typedef List* Node;
+typedef Data* Node;
+typedef Node* List;
 
 Node CreateNode();
-void AddNode(Node HEAD, List newNode);
+Node CreateNodeNew();
+void AddNode(Node HEAD, Data newNode);
+void AddNodeNew(List list, Node add);
 void PrintAccounts(Node HEAD);
 
 #endif

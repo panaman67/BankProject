@@ -5,7 +5,7 @@
 int main()
 {
 	Node HEAD, temp;
-	HEAD = (Node)malloc(sizeof(struct List));
+	HEAD = (Node)malloc(sizeof(struct Data));
 	HEAD->next = NULL;
 	HEAD->accID = 44444;
 

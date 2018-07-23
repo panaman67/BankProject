@@ -1,6 +1,6 @@
-#include "user.h"
-#include "account.h"
 #include <stdio.h>
+#include "account.h"
+#include "user.h"
 
 void Deposit(Node acc, float amt)
 {

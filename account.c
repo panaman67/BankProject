@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "account.h"
 
+// FIXME: CREATES DANGLING POINTER!!!!!!!!!!!!!!!!
 Node CreateNode()
 {
-	Node temp = (Node)malloc(sizeof(struct List));
+	Node temp = (Node)malloc(sizeof(struct Data));
 	temp->next = NULL;
 	return temp;
 }
 
-void AddNode(Node HEAD, List add)
+void AddNode(Node HEAD, Data add)
 {
 	Node temp, last;
 	temp = CreateNode();
@@ -31,17 +31,15 @@ void AddNode(Node HEAD, List add)
 	last->next = temp;
 }
 
-void DeleteNode(Node HEAD, int accID)
-{
-	// TODO
-}
-
 void PrintAccounts(Node HEAD)
 {
-	Node temp = HEAD;
+	Node temp = HEAD->next;
+
+	puts("Fn        | ln       | Balance  ");
+	puts("--------------------------------");
 	while (temp != NULL)
 	{
-		printf("%d\n", temp->accID);
+		printf("%-10s %-10s %10.2lf\n", temp->firstName, temp->lastName, temp->balance);
 		temp = temp->next;
 	}
 }
